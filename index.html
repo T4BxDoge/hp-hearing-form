@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<base target="_top">
+<title>ホームページ制作ヒアリング</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#f3f6f5; --surface:#ffffff; --ink:#1d2a29; --muted:#5d6e6c; --line:#d6e0de;
+  --accent:#1f6f66; --accent-soft:#e1efec; --warn:#b4472f;
+  --display:"Zen Maru Gothic","Hiragino Maru Gothic ProN",sans-serif;
+  --body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121918; --surface:#1b2423; --ink:#e6eeec; --muted:#9aaeab; --line:#2f3d3b;
+  --accent:#5cc0b2; --accent-soft:#1f3532; --warn:#e9876f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121918; --surface:#1b2423; --ink:#e6eeec; --muted:#9aaeab; --line:#2f3d3b;
+  --accent:#5cc0b2; --accent-soft:#1f3532; --warn:#e9876f; color-scheme:dark}
+html,body{margin:0}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:640px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:18px}
+header h1{font-family:var(--display);font-weight:700;font-size:1.6rem;line-height:1.35;margin:0 0 8px;text-wrap:balance}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+.progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:flex;align-items:center;gap:12px}
+.bar{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.count{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+fieldset{border:1px solid var(--line);background:var(--surface);border-radius:14px;margin:0;padding:18px 18px 20px;min-width:0}
+fieldset.err{border-color:var(--warn)}
+legend{float:left;width:100%;padding:0;margin-bottom:4px;font-family:var(--display);font-weight:700;font-size:1.08rem;line-height:1.5}
+legend .no{display:inline-block;color:var(--accent);font-variant-numeric:tabular-nums;margin-right:8px}
+.req{font-family:var(--body);font-size:.72rem;font-weight:700;color:var(--warn);margin-left:6px;vertical-align:2px;letter-spacing:.04em}
+.hint{clear:both;margin:0 0 12px;color:var(--muted);font-size:.85rem}
+.opts{clear:both;display:flex;flex-wrap:wrap;gap:8px}
+.opts label{position:relative;cursor:pointer}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts span{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--line);border-radius:99px;font-size:.93rem;background:var(--surface);transition:background .15s,border-color .15s}
+.opts input:checked+span{background:var(--accent-soft);border-color:var(--accent);color:var(--ink);font-weight:700}
+.opts input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.sw{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.15);flex:none}
+input[type=text],textarea{clear:both;display:block;width:100%;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:96px;resize:vertical}
+input[type=text]:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.stack{clear:both;display:flex;flex-direction:column;gap:10px}
+.other{margin-top:10px}
+.actions{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+button{font:inherit;font-weight:700;border-radius:12px;padding:14px 18px;cursor:pointer;border:1px solid var(--accent)}
+.primary{background:var(--accent);color:var(--surface)}
+button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.msg{color:var(--warn);font-size:.9rem;margin:0}
+#result{border:1px solid var(--accent);background:var(--surface);border-radius:14px;padding:18px}
+#result h2{font-family:var(--display);font-size:1.2rem;margin:0 0 6px}
+#result p{margin:0;color:var(--muted);font-size:.9rem}
+.files{clear:both;margin-top:12px;padding:12px;border:1px dashed var(--accent);border-radius:10px;background:var(--accent-soft)}
+.files p{margin:0 0 8px;font-size:.85rem;color:var(--muted)}
+.pick{display:inline-block;font-weight:700;font-size:.9rem;color:var(--accent);background:var(--surface);border:1px solid var(--accent);border-radius:99px;padding:8px 14px;cursor:pointer}
+.pick input{position:absolute;opacity:0;width:1px;height:1px}
+.flist{list-style:none;margin:10px 0 0;padding:0;font-size:.85rem;display:flex;flex-direction:column;gap:4px}
+.flist li{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.flist li span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.flist button{padding:2px 8px;border:none;background:none;color:var(--warn);font-size:.85rem;font-weight:500}
+button:disabled{opacity:.6;cursor:wait}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>ホームページについて<br>教えてください</h1>
+    <p>全15問、5分ほどで終わります。わからない質問は「わからない」を選ぶか、空欄のままで大丈夫です。</p>
+  </header>
+
+  <div class="progress" aria-hidden="true"><div class="bar"><span id="bar"></span></div><div class="count" id="count">0 / 15</div></div>
+
+  <form id="f" novalidate></form>
+  <div id="result" hidden>
+    <h2>ご回答ありがとうございました</h2>
+    <p>回答を受け付けました。内容を確認して、担当者からご連絡いたします。このページは閉じて大丈夫です。</p>
+  </div>
+</div>
+
+<script>
+const Q=[
+ {id:"q1",t:"会社名とご担当者さまのお名前",type:"text2",req:true},
+ {id:"q2",t:"ホームページを作る一番の目的は？",type:"radio",req:true,o:["会社のことを知ってもらう","問い合わせ・相談を増やす","スタッフを採用したい","商品やサービスを売りたい","今のサイトが古いので新しくしたい"],other:true},
+ {id:"q3",t:"主に誰に見てほしいですか？",hint:"いくつ選んでもOKです",type:"check",o:["一般のお客さま","取引先・企業","求職者（働きたい人）","地域の方","まだわからない"]},
+ {id:"q4",t:"見てほしい人の年代は？",hint:"いくつ選んでもOKです",type:"check",o:["10〜20代","30〜40代","50〜60代","70代以上","幅広く"]},
+ {id:"q5",t:"全体の雰囲気はどれが近いですか？",type:"radio",req:true,o:["きっちり・信頼感","明るく・親しみやすい","おしゃれ・洗練された","温かい・ナチュラル","力強い・元気"]},
+ {id:"q6",t:"使いたい色はありますか？",hint:"会社のイメージカラーがあれば教えてください",type:"check",o:[["青","#3b6fb6"],["緑","#3f9a62"],["赤","#c8423a"],["オレンジ","#e58b2f"],["黄","#e8c43a"],["ピンク","#e07ba4"],["紫","#7e5bb0"],["茶","#8a6142"],["黒・グレー","#4a4a4a"],["白・シンプル","#ffffff"],"おまかせ"],other:"色の名前やカラーコード"},
+ {id:"q7",t:"会社のロゴはありますか？",type:"radio",o:["あり（データもある）","あり（データはない）","ない（作ってほしい）","ない（なくてもいい）"]},
+ {id:"q8",t:"ホームページに使う写真はどうしますか？",type:"radio",files:true,o:["自分たちで用意できる","イメージ写真（素材）でOK","わからない"]},
+ {id:"q9",t:"載せたいページを選んでください",hint:"いくつ選んでもOKです",type:"check",o:["会社紹介","サービス・商品の紹介","料金","実績・お客さまの声","スタッフ紹介","採用情報","よくある質問","お知らせ・ブログ","アクセス（地図）","お問い合わせ"],other:"ほかに載せたいもの"},
+ {id:"q10",t:"あったら嬉しい機能はありますか？",hint:"いくつ選んでもOKです",type:"check",o:["お問い合わせフォーム","予約受付","ネットショップ","Instagram などSNSとの連携","LINEで問い合わせ","特になし"]},
+ {id:"q11",t:"公開したあと、内容の更新は誰がしますか？",type:"radio",o:["自分たちでしたい","制作者にお願いしたい","ほとんど更新しない","まだ決めていない"]},
+ {id:"q12",t:"お客さまはスマホとパソコン、どちらで見ることが多いと思いますか？",type:"radio",o:["ほぼスマホ","半々くらい","ほぼパソコン","わからない"]},
+ {id:"q13",t:"「こんな感じがいい」と思うサイトはありますか？",hint:"同業他社や好きなお店のサイトなど。URLやお店の名前だけでも大丈夫です",type:"textarea",ph:"例：〇〇さんのホームページの、写真が大きい感じが好き"},
+ {id:"q14",t:"いつ頃までに公開したいですか？",type:"radio",o:["1ヶ月以内","2〜3ヶ月以内","半年以内","特に決まっていない"]},
+ {id:"q15",t:"ご予算の目安を教えてください",type:"radio",o:["〜10万円","10〜30万円","30〜50万円","50万円以上","相談して決めたい"]}
+];
+const f=document.getElementById("f");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+f.innerHTML=Q.map((q,i)=>{
+  let h=`<fieldset id="fs-${q.id}"><legend><span class="no">Q${i+1}</span>${esc(q.t)}${q.req?'<span class="req">必須</span>':''}</legend>`;
+  h+=q.hint?`<p class="hint">${esc(q.hint)}</p>`:`<p class="hint" style="margin:0 0 8px"></p>`;
+  if(q.type==="text2"){
+    h+=`<div class="stack"><input type="text" id="${q.id}-a" name="${q.id}-a" placeholder="会社名" autocomplete="organization"><input type="text" id="${q.id}-b" name="${q.id}-b" placeholder="お名前" autocomplete="name"></div>`;
+  }else if(q.type==="textarea"){
+    h+=`<textarea id="${q.id}" name="${q.id}" placeholder="${esc(q.ph||"")}"></textarea>`;
+  }else{
+    const t=q.type==="radio"?"radio":"checkbox";
+    h+=`<div class="opts">`+q.o.map((o,j)=>{const [lab,col]=Array.isArray(o)?o:[o];
+      return `<label><input type="${t}" name="${q.id}" id="${q.id}-${j}" value="${esc(lab)}"><span>${col?`<i class="sw" style="background:${col}"></i>`:""}${esc(lab)}</span></label>`}).join("");
+    if(q.other===true)h+=`<label><input type="${t}" name="${q.id}" id="${q.id}-x" value="その他"><span>その他</span></label>`;
+    h+=`</div>`;
+    if(q.files)h+=`<div class="files" id="filebox" hidden><p>使いたい写真があれば添付してください（10枚まで）。あとからメールなどで送っていただいても大丈夫です。</p><label class="pick">写真を選ぶ<input type="file" id="q8-file" accept="image/*" multiple></label><ul class="flist" id="flist"></ul></div>`;
+    if(q.other)h+=`<input type="text" class="other" id="${q.id}-o" name="${q.id}-o" placeholder="${q.other===true?"その他の場合はこちらに":esc(q.other)}">`;
+  }
+  return h+`</fieldset>`;
+}).join("")+`<div class="actions" style="margin-top:4px"><p class="msg" id="msg" hidden></p><button type="submit" class="primary">回答を送信する</button></div>`;
+f.style.display="flex";f.style.flexDirection="column";f.style.gap="18px";
+
+const val=q=>{
+  if(q.type==="text2"){const a=f[q.id+"-a"].value.trim(),b=f[q.id+"-b"].value.trim();return a?[a,b].filter(Boolean).join(" / "):""}
+  if(q.type==="textarea")return f[q.id].value.trim();
+  const v=[...f.querySelectorAll(`input[name="${q.id}"]:checked`)].map(x=>x.value);
+  const o=f[q.id+"-o"]?.value.trim();
+  if(o){const k=v.indexOf("その他");if(k>=0)v[k]="その他（"+o+"）";else v.push(o)}
+  return v.join("、");
+};
+const KEY="hp-hearing-draft";
+function save(){try{const d={};f.querySelectorAll("input:not([type=file]),textarea").forEach(e=>{d[e.id]=(e.type==="radio"||e.type==="checkbox")?e.checked:e.value});localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||"{}");Object.entries(d).forEach(([k,v])=>{const e=document.getElementById(k);if(!e)return;if(e.type==="radio"||e.type==="checkbox")e.checked=v;else e.value=v})}catch(e){}}
+function upd(){const n=Q.filter(q=>val(q)).length;document.getElementById("bar").style.width=(n/15*100)+"%";document.getElementById("count").textContent=n+" / 15"}
+load();upd();
+f.addEventListener("input",()=>{upd();save()});
+f.addEventListener("change",()=>{upd();save()});
+
+// 写真の添付
+const MAXF=10;let picked=[];
+const box=document.getElementById("filebox"),fl=document.getElementById("flist");
+const ownPhotos=()=>document.getElementById("q8-0").checked;
+function syncBox(){box.hidden=!ownPhotos()}
+function drawList(){fl.innerHTML=picked.map((p,i)=>`<li><span>${esc(p.name)}</span><button type="button" data-i="${i}">削除</button></li>`).join("")}
+document.getElementById("q8-file").addEventListener("change",e=>{
+  const fs=[...e.target.files].filter(x=>/^image\//.test(x.type));
+  picked=picked.concat(fs).slice(0,MAXF);e.target.value="";drawList();
+});
+fl.addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(b){picked.splice(+b.dataset.i,1);drawList()}});
+f.addEventListener("change",syncBox);syncBox();
+// 大きい写真は長い辺2400pxに縮めてから送る
+function shrink(file){
+  return new Promise(res=>{
+    if(/gif|svg/.test(file.type))return res(file);
+    const url=URL.createObjectURL(file),img=new Image();
+    img.onload=()=>{
+      const k=Math.min(1,2400/Math.max(img.width,img.height));
+      if(k===1&&file.size<4e6){URL.revokeObjectURL(url);return res(file)}
+      const c=document.createElement("canvas");c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);
+      c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+      c.toBlob(b=>res(b?new File([b],file.name.replace(/\.\w+$/,"")+".jpg",{type:"image/jpeg"}):file),"image/jpeg",.88);
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);res(file)};
+    img.src=url;
+  });
+}
+const toB64=blob=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]);r.onerror=rej;r.readAsDataURL(blob)});
+const run=(fn,...a)=>new Promise((res,rej)=>google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...a));
+
+f.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const miss=Q.filter(q=>q.req&&!val(q));
+  Q.forEach(q=>document.getElementById("fs-"+q.id).classList.toggle("err",miss.includes(q)));
+  const m=document.getElementById("msg");
+  if(miss.length){m.hidden=false;m.textContent="必須の質問（"+miss.map(q=>"Q"+(Q.indexOf(q)+1)).join("・")+"）にお答えください。";document.getElementById("fs-"+miss[0].id).scrollIntoView({behavior:"smooth",block:"center"});return}
+  m.hidden=true;
+  const btn=f.querySelector('button[type=submit]');btn.disabled=true;
+  const company=f["q1-a"].value.trim();
+  const d=new Date(),pad=n=>String(n).padStart(2,"0");
+  const files=ownPhotos()?picked:[];
+  const folderKey=files.length?`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}_${company}`:"";
+  try{
+    for(let i=0;i<files.length;i++){
+      btn.textContent=`写真を送信しています（${i+1} / ${files.length}）…`;
+      const blob=await shrink(files[i]);
+      await run("uploadFile",folderKey,blob.name||files[i].name,blob.type||"image/jpeg",await toB64(blob));
+    }
+    btn.textContent="送信しています…";
+    await run("submitAnswer",{company,name:f["q1-b"].value.trim(),answers:Q.slice(1).map(val),folderKey});
+    try{localStorage.removeItem(KEY)}catch(_){}
+    f.hidden=true;document.querySelector(".progress").hidden=true;document.querySelector("header").hidden=true;
+    document.getElementById("result").hidden=false;window.scrollTo(0,0);
+  }catch(err){
+    btn.disabled=false;btn.textContent="回答を送信する";
+    m.hidden=false;m.textContent="送信できませんでした。通信状況を確認して、もう一度お試しください。（"+(err&&err.message||err)+"）";
+  }
+});
+</script>
+</body>
+</html>
