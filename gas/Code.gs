@@ -6,6 +6,7 @@
 
 const SHEET_NAME = '回答';
 const ROOT_FOLDER_NAME = 'HPヒアリング添付';
+const COPY_HEADER = 'コピペ用（Claudeに貼る）';
 const FORM_URL = 'https://raw.githubusercontent.com/T4BxDoge/hp-hearing-form/main/index.html';
 
 // フォームの画面を表示（GitHubの最新版 → 読めなければ直前の版 → Apps Script内の index）
@@ -70,6 +71,7 @@ function submitAnswer(data) {
     }
     const all = [['送信日時', new Date()]].concat(fields).concat([['写真フォルダ', folderUrl]]);
 
+    ensureCopyColumn_(sheet);
     const lastCol = sheet.getLastColumn();
     let headers = lastCol ? sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(String) : [];
     const missing = all.map(p => p[0]).filter((l, i, arr) => headers.indexOf(l) === -1 && arr.indexOf(l) === i);
@@ -80,11 +82,71 @@ function submitAnswer(data) {
     }
     const row = new Array(headers.length).fill('');
     all.forEach(([label, v]) => { row[headers.indexOf(label)] = safe_(v); });
+    row[0] = buildCopyText_(all);
     sheet.appendRow(row);
   } finally {
     lock.releaseLock();
   }
   return true;
+}
+
+// A列を「コピペ用」にする（なければ一番左に列を差し込む）
+function ensureCopyColumn_(sheet) {
+  if (sheet.getLastColumn() === 0) {
+    sheet.getRange(1, 1).setValue(COPY_HEADER);
+  } else if (String(sheet.getRange(1, 1).getValue()) !== COPY_HEADER) {
+    sheet.insertColumnBefore(1);
+    sheet.getRange(1, 1).setValue(COPY_HEADER);
+  }
+  sheet.getRange(1, 1).setFontWeight('bold');
+  sheet.getRange('A:A').setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
+  sheet.setColumnWidth(1, 160);
+  sheet.setFrozenRows(1);
+}
+
+// Claudeに貼り付ける文章を作る（空欄の項目は省く）
+function buildCopyText_(pairs) {
+  const lines = [
+    '以下はホームページ制作のヒアリング回答です。この内容をもとにホームページを作ってください。',
+    '',
+    '【前提】',
+    '・1ページ完結型（会社紹介・サービス紹介・お問い合わせを含む）',
+    '・スマートフォン対応',
+    '',
+    '【ヒアリング回答】'
+  ];
+  let sentAt = '';
+  pairs.forEach(([label, v]) => {
+    if (label === COPY_HEADER) return;
+    if (v instanceof Date) v = Utilities.formatDate(v, Session.getScriptTimeZone(), 'yyyy/MM/dd HH:mm');
+    const text = String(v == null ? '' : v).trim();
+    if (!text) return;
+    if (label === '送信日時') { sentAt = text; return; }
+    lines.push('・' + label + '：' + text);
+  });
+  if (sentAt) lines.push('', '（回答日時：' + sentAt + '）');
+  return lines.join('\n');
+}
+
+// スプシのメニューに「ヒアリング」を追加
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu('ヒアリング')
+    .addItem('コピペ用を作り直す', 'rebuildCopyColumn')
+    .addToUi();
+}
+
+// 既にある行のA列（コピペ用）をまとめて作り直す
+function rebuildCopyColumn() {
+  const sheet = getSheet_();
+  if (sheet.getLastRow() < 1) return;
+  ensureCopyColumn_(sheet);
+  const lastRow = sheet.getLastRow(), lastCol = sheet.getLastColumn();
+  if (lastRow < 2) return;
+  const values = sheet.getRange(1, 1, lastRow, lastCol).getValues();
+  const headers = values[0].map(String);
+  const out = values.slice(1).map(r => [buildCopyText_(headers.map((h, i) => [h, r[i]]))]);
+  sheet.getRange(2, 1, out.length, 1).setValues(out);
 }
 
 function getSheet_() {
