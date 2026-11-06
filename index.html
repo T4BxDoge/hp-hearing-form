@@ -65,6 +65,17 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .flist li{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .flist li span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .flist button{padding:2px 8px;border:none;background:none;color:var(--warn);font-size:.85rem;font-weight:500}
+.plan{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:16px 18px}
+.plan h2{font-family:var(--display);font-size:1rem;margin:0 0 10px}
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:0}
+.price div{background:var(--accent-soft);border-radius:10px;padding:10px 12px}
+.price dt{font-size:.8rem;color:var(--muted)}
+.price dd{margin:0;font-family:var(--display);font-weight:700;font-size:1.25rem;color:var(--accent);font-variant-numeric:tabular-nums}
+.price dd small{font-family:var(--body);font-size:.75rem;font-weight:500;color:var(--muted);margin-left:4px}
+.plan details{margin-top:10px;font-size:.88rem}
+.plan summary{cursor:pointer;color:var(--accent);font-weight:700}
+.plan ul{margin:8px 0 0;padding-left:1.2em;display:flex;flex-direction:column;gap:2px}
+.plan h3{font-size:.85rem;margin:12px 0 0;color:var(--muted)}
 button:disabled{opacity:.6;cursor:wait}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -74,10 +85,36 @@ button:disabled{opacity:.6;cursor:wait}
 <div class="wrap">
   <header>
     <h1>ホームページについて<br>教えてください</h1>
-    <p>全15問、5分ほどで終わります。わからない質問は「わからない」を選ぶか、空欄のままで大丈夫です。</p>
+    <p>全<span id="total">20</span>問、5〜10分ほどで終わります。わからない質問は「わからない」を選ぶか、空欄のままで大丈夫です。</p>
   </header>
 
-  <div class="progress" aria-hidden="true"><div class="bar"><span id="bar"></span></div><div class="count" id="count">0 / 15</div></div>
+  <section class="plan" aria-label="基本プラン">
+    <h2>基本プラン</h2>
+    <dl class="price">
+      <div><dt>初期制作費</dt><dd>55,000円<small>税込</small></dd></div>
+      <div><dt>月額管理費</dt><dd>5,500〜11,000円<small>税込</small></dd></div>
+    </dl>
+    <details>
+      <summary>含まれる内容・追加料金を見る</summary>
+      <ul>
+        <li>1ページ完結型のホームページ（スマートフォン対応）</li>
+        <li>会社紹介・サービス紹介・お問い合わせ</li>
+        <li>公開前の修正2回まで無料</li>
+        <li>無料デザインデモあり</li>
+        <li>打ち合わせは原則LINEのみ</li>
+        <li>月額管理費に、軽微な修正 月2回（合計30分以内）を含む</li>
+        <li>ドメインの取得・更新などの実費は別途</li>
+      </ul>
+      <h3>追加料金（税込）</h3>
+      <ul>
+        <li>3回目以降の軽微な修正：5,500円〜</li>
+        <li>ページ追加：11,000円〜</li>
+        <li>デザインの大幅変更：22,000円〜</li>
+      </ul>
+    </details>
+  </section>
+
+  <div class="progress" aria-hidden="true"><div class="bar"><span id="bar"></span></div><div class="count" id="count">0</div></div>
 
   <form id="f" novalidate></form>
   <div id="result" hidden>
@@ -88,21 +125,26 @@ button:disabled{opacity:.6;cursor:wait}
 
 <script>
 const Q=[
- {id:"q1",t:"会社名とご担当者さまのお名前",type:"text2",req:true},
- {id:"q2",t:"ホームページを作る一番の目的は？",type:"radio",req:true,o:["会社のことを知ってもらう","問い合わせ・相談を増やす","スタッフを採用したい","商品やサービスを売りたい","今のサイトが古いので新しくしたい"],other:true},
- {id:"q3",t:"主に誰に見てほしいですか？",hint:"いくつ選んでもOKです",type:"check",o:["一般のお客さま","取引先・企業","求職者（働きたい人）","地域の方","まだわからない"]},
- {id:"q4",t:"見てほしい人の年代は？",hint:"いくつ選んでもOKです",type:"check",o:["10〜20代","30〜40代","50〜60代","70代以上","幅広く"]},
- {id:"q5",t:"全体の雰囲気はどれが近いですか？",type:"radio",req:true,o:["きっちり・信頼感","明るく・親しみやすい","おしゃれ・洗練された","温かい・ナチュラル","力強い・元気"]},
- {id:"q6",t:"使いたい色はありますか？",hint:"会社のイメージカラーがあれば教えてください",type:"check",o:[["青","#3b6fb6"],["緑","#3f9a62"],["赤","#c8423a"],["オレンジ","#e58b2f"],["黄","#e8c43a"],["ピンク","#e07ba4"],["紫","#7e5bb0"],["茶","#8a6142"],["黒・グレー","#4a4a4a"],["白・シンプル","#ffffff"],"おまかせ"],other:"色の名前やカラーコード"},
- {id:"q7",t:"会社のロゴはありますか？",type:"radio",o:["あり（データもある）","あり（データはない）","ない（作ってほしい）","ない（なくてもいい）"]},
- {id:"q8",t:"ホームページに使う写真はどうしますか？",type:"radio",files:true,o:["自分たちで用意できる","イメージ写真（素材）でOK","わからない"]},
- {id:"q9",t:"載せたいページを選んでください",hint:"いくつ選んでもOKです",type:"check",o:["会社紹介","サービス・商品の紹介","料金","実績・お客さまの声","スタッフ紹介","採用情報","よくある質問","お知らせ・ブログ","アクセス（地図）","お問い合わせ"],other:"ほかに載せたいもの"},
- {id:"q10",t:"あったら嬉しい機能はありますか？",hint:"いくつ選んでもOKです",type:"check",o:["お問い合わせフォーム","予約受付","ネットショップ","Instagram などSNSとの連携","LINEで問い合わせ","特になし"]},
- {id:"q11",t:"公開したあと、内容の更新は誰がしますか？",type:"radio",o:["自分たちでしたい","制作者にお願いしたい","ほとんど更新しない","まだ決めていない"]},
- {id:"q12",t:"お客さまはスマホとパソコン、どちらで見ることが多いと思いますか？",type:"radio",o:["ほぼスマホ","半々くらい","ほぼパソコン","わからない"]},
- {id:"q13",t:"「こんな感じがいい」と思うサイトはありますか？",hint:"同業他社や好きなお店のサイトなど。URLやお店の名前だけでも大丈夫です",type:"textarea",ph:"例：〇〇さんのホームページの、写真が大きい感じが好き"},
- {id:"q14",t:"いつ頃までに公開したいですか？",type:"radio",o:["1ヶ月以内","2〜3ヶ月以内","半年以内","特に決まっていない"]},
- {id:"q15",t:"ご予算の目安を教えてください",type:"radio",o:["〜10万円","10〜30万円","30〜50万円","50万円以上","相談して決めたい"]}
+ {id:"q1",t:"会社名とご担当者さまのお名前",type:"text2",req:true,reqFirst:true,ph:["会社名","お名前"],col:["会社名","担当者名"]},
+ {id:"q2",t:"ご連絡先を教えてください",hint:"打ち合わせは原則LINEで行います。どちらか片方だけでも大丈夫です",type:"text2",req:true,ph:["LINEの名前（表示名）","電話番号"],col:["LINE名","電話番号"]},
+ {id:"q3",t:"業種を教えてください",c:"業種",type:"radio",o:["飲食店","美容・サロン","建設・リフォーム","医療・介護","士業・コンサル","小売・ネット販売","教室・スクール"],other:true},
+ {id:"q4",t:"どんなお仕事・サービスをしていますか？",c:"仕事内容",hint:"一言や箇条書きでも大丈夫です。ホームページの文章のもとになります",type:"textarea",ph:"例：福岡市内で外壁塗装と屋根の修理をしています。見積もり無料。"},
+ {id:"q5",t:"お客さまに選ばれている理由や、こだわりはありますか？",c:"強み",type:"textarea",ph:"例：地元で30年。職人が直接うかがうので中間マージンがありません"},
+ {id:"q6",t:"ホームページを作る一番の目的は？",c:"目的",type:"radio",req:true,o:["会社のことを知ってもらう","問い合わせ・相談を増やす","スタッフを採用したい","お店に来てほしい","今のサイトが古いので新しくしたい"],other:true},
+ {id:"q7",t:"主にどんな人に見てほしいですか？",c:"見てほしい人",hint:"いくつ選んでもOKです",type:"check",o:["一般のお客さま","取引先・企業","求職者（働きたい人）","地域の方","まだわからない"]},
+ {id:"q8",t:"全体の雰囲気はどれが近いですか？",c:"雰囲気",type:"radio",req:true,o:["きっちり・信頼感","明るく・親しみやすい","おしゃれ・洗練された","温かい・ナチュラル","力強い・元気"]},
+ {id:"q9",t:"使いたい色はありますか？",c:"色",hint:"会社のイメージカラーがあれば教えてください",type:"check",o:[["青","#3b6fb6"],["緑","#3f9a62"],["赤","#c8423a"],["オレンジ","#e58b2f"],["黄","#e8c43a"],["ピンク","#e07ba4"],["紫","#7e5bb0"],["茶","#8a6142"],["黒・グレー","#4a4a4a"],["白・シンプル","#ffffff"],"おまかせ"],other:"色の名前やカラーコード"},
+ {id:"q10",t:"会社のロゴはありますか？",c:"ロゴ",type:"radio",o:["あり（データもある）","あり（データはない）","ない"]},
+ {id:"q11",t:"ホームページに使う写真はどうしますか？",c:"写真",type:"radio",files:true,o:["自分たちで用意できる","イメージ写真（素材）でOK","わからない"]},
+ {id:"q12",t:"ほかに載せたい内容はありますか？",c:"載せたい内容",hint:"「会社紹介」「サービス紹介」「お問い合わせ」は基本で入っています。選んだ内容は1ページの中にまとめます",type:"check",o:["料金・メニュー","実績・施工例","お客さまの声","スタッフ紹介","よくある質問","営業時間・定休日","アクセス・地図","採用情報","SNSへのリンク"],other:"ほかに入れたいもの"},
+ {id:"q13",t:"お問い合わせはどの方法で受けたいですか？",c:"問い合わせ方法",hint:"いくつ選んでもOKです",type:"check",o:["お問い合わせフォーム","電話","LINE","メール","Instagram"]},
+ {id:"q14",t:"ドメイン（〇〇.com など）はお持ちですか？",c:"ドメイン",hint:"ドメインはホームページの住所のようなものです。取得・更新の費用は実費で別途かかります",type:"radio",o:["持っている","持っていない（取得してほしい）","わからない"]},
+ {id:"q15",t:"今、ホームページはありますか？",c:"今のHP",type:"radio",o:["ある","ない"],other:"あればURLを入力"},
+ {id:"q16",t:"「こんな感じがいい」と思うサイトはありますか？",c:"参考サイト",hint:"同業他社や好きなお店のサイトなど。URLやお店の名前だけでも大丈夫です",type:"textarea",ph:"例：〇〇さんのホームページの、写真が大きい感じが好き"},
+ {id:"q17",t:"公開したあと、どのくらい内容を変えそうですか？",c:"更新頻度",hint:"月額管理費には、軽微な修正 月2回（合計30分以内）が含まれます",type:"radio",o:["ほとんど変えない","月に1〜2回くらい","月に3回以上","わからない"]},
+ {id:"q18",t:"いつ頃までに公開したいですか？",c:"公開時期",type:"radio",o:["1ヶ月以内","2〜3ヶ月以内","半年以内","特に決まっていない"]},
+ {id:"q19",t:"公開前に、無料のデザインデモ（見本）を見たいですか？",c:"デザインデモ",type:"radio",o:["見たい","なくてよい"]},
+ {id:"q20",t:"そのほか、ご要望やご質問があればどうぞ",c:"その他要望",type:"textarea",ph:"例：Instagramの投稿もホームページに表示したい"}
 ];
 const f=document.getElementById("f");
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -110,7 +152,7 @@ f.innerHTML=Q.map((q,i)=>{
   let h=`<fieldset id="fs-${q.id}"><legend><span class="no">Q${i+1}</span>${esc(q.t)}${q.req?'<span class="req">必須</span>':''}</legend>`;
   h+=q.hint?`<p class="hint">${esc(q.hint)}</p>`:`<p class="hint" style="margin:0 0 8px"></p>`;
   if(q.type==="text2"){
-    h+=`<div class="stack"><input type="text" id="${q.id}-a" name="${q.id}-a" placeholder="会社名" autocomplete="organization"><input type="text" id="${q.id}-b" name="${q.id}-b" placeholder="お名前" autocomplete="name"></div>`;
+    h+=`<div class="stack"><input type="text" id="${q.id}-a" name="${q.id}-a" placeholder="${esc(q.ph[0])}"><input type="text" id="${q.id}-b" name="${q.id}-b" placeholder="${esc(q.ph[1])}"></div>`;
   }else if(q.type==="textarea"){
     h+=`<textarea id="${q.id}" name="${q.id}" placeholder="${esc(q.ph||"")}"></textarea>`;
   }else{
@@ -119,7 +161,7 @@ f.innerHTML=Q.map((q,i)=>{
       return `<label><input type="${t}" name="${q.id}" id="${q.id}-${j}" value="${esc(lab)}"><span>${col?`<i class="sw" style="background:${col}"></i>`:""}${esc(lab)}</span></label>`}).join("");
     if(q.other===true)h+=`<label><input type="${t}" name="${q.id}" id="${q.id}-x" value="その他"><span>その他</span></label>`;
     h+=`</div>`;
-    if(q.files)h+=`<div class="files" id="filebox" hidden><p>使いたい写真があれば添付してください（10枚まで）。あとからメールなどで送っていただいても大丈夫です。</p><label class="pick">写真を選ぶ<input type="file" id="q8-file" accept="image/*" multiple></label><ul class="flist" id="flist"></ul></div>`;
+    if(q.files)h+=`<div class="files" id="filebox" hidden><p>使いたい写真があれば添付してください（10枚まで）。あとからメールなどで送っていただいても大丈夫です。</p><label class="pick">写真を選ぶ<input type="file" id="photo-file" accept="image/*" multiple></label><ul class="flist" id="flist"></ul></div>`;
     if(q.other)h+=`<input type="text" class="other" id="${q.id}-o" name="${q.id}-o" placeholder="${q.other===true?"その他の場合はこちらに":esc(q.other)}">`;
   }
   return h+`</fieldset>`;
@@ -127,7 +169,7 @@ f.innerHTML=Q.map((q,i)=>{
 f.style.display="flex";f.style.flexDirection="column";f.style.gap="18px";
 
 const val=q=>{
-  if(q.type==="text2"){const a=f[q.id+"-a"].value.trim(),b=f[q.id+"-b"].value.trim();return a?[a,b].filter(Boolean).join(" / "):""}
+  if(q.type==="text2"){const a=f[q.id+"-a"].value.trim(),b=f[q.id+"-b"].value.trim();return (q.reqFirst&&!a)?"":[a,b].filter(Boolean).join(" / ")}
   if(q.type==="textarea")return f[q.id].value.trim();
   const v=[...f.querySelectorAll(`input[name="${q.id}"]:checked`)].map(x=>x.value);
   const o=f[q.id+"-o"]?.value.trim();
@@ -137,7 +179,8 @@ const val=q=>{
 const KEY="hp-hearing-draft";
 function save(){try{const d={};f.querySelectorAll("input:not([type=file]),textarea").forEach(e=>{d[e.id]=(e.type==="radio"||e.type==="checkbox")?e.checked:e.value});localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||"{}");Object.entries(d).forEach(([k,v])=>{const e=document.getElementById(k);if(!e)return;if(e.type==="radio"||e.type==="checkbox")e.checked=v;else e.value=v})}catch(e){}}
-function upd(){const n=Q.filter(q=>val(q)).length;document.getElementById("bar").style.width=(n/15*100)+"%";document.getElementById("count").textContent=n+" / 15"}
+document.getElementById("total").textContent=Q.length;
+function upd(){const n=Q.filter(q=>val(q)).length;document.getElementById("bar").style.width=(n/Q.length*100)+"%";document.getElementById("count").textContent=n+" / "+Q.length}
 load();upd();
 f.addEventListener("input",()=>{upd();save()});
 f.addEventListener("change",()=>{upd();save()});
@@ -145,10 +188,11 @@ f.addEventListener("change",()=>{upd();save()});
 // 写真の添付
 const MAXF=10;let picked=[];
 const box=document.getElementById("filebox"),fl=document.getElementById("flist");
-const ownPhotos=()=>document.getElementById("q8-0").checked;
+const photoQ=Q.find(q=>q.files);
+const ownPhotos=()=>document.getElementById(photoQ.id+"-0").checked;
 function syncBox(){box.hidden=!ownPhotos()}
 function drawList(){fl.innerHTML=picked.map((p,i)=>`<li><span>${esc(p.name)}</span><button type="button" data-i="${i}">削除</button></li>`).join("")}
-document.getElementById("q8-file").addEventListener("change",e=>{
+document.getElementById("photo-file").addEventListener("change",e=>{
   const fs=[...e.target.files].filter(x=>/^image\//.test(x.type));
   picked=picked.concat(fs).slice(0,MAXF);e.target.value="";drawList();
 });
@@ -192,7 +236,9 @@ f.addEventListener("submit",async e=>{
       await run("uploadFile",folderKey,blob.name||files[i].name,blob.type||"image/jpeg",await toB64(blob));
     }
     btn.textContent="送信しています…";
-    await run("submitAnswer",{company,name:f["q1-b"].value.trim(),answers:Q.slice(1).map(val),folderKey});
+    const fields=[];
+    Q.forEach(q=>{if(q.type==="text2")fields.push([q.col[0],f[q.id+"-a"].value.trim()],[q.col[1],f[q.id+"-b"].value.trim()]);else fields.push([q.c,val(q)])});
+    await run("submitAnswer",{fields,folderKey});
     try{localStorage.removeItem(KEY)}catch(_){}
     f.hidden=true;document.querySelector(".progress").hidden=true;document.querySelector("header").hidden=true;
     document.getElementById("result").hidden=false;window.scrollTo(0,0);

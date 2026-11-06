@@ -1,19 +1,12 @@
 // ホームページ制作ヒアリング — GAS本体
 // フォームの画面（index.html）はGitHubから毎回読み込むので、
 // 質問や見た目の修正はGitHub側を直すだけで反映されます。
-// このファイルを変えたときだけ、Apps Scriptに貼り直してください。
+// スプシの列はフォームの質問から自動で作られるので、質問を増やしても
+// このファイルの貼り直しは不要です。
 
 const SHEET_NAME = '回答';
 const ROOT_FOLDER_NAME = 'HPヒアリング添付';
 const FORM_URL = 'https://raw.githubusercontent.com/T4BxDoge/hp-hearing-form/main/index.html';
-
-const HEADERS = [
-  '送信日時', '会社名', '担当者名',
-  'Q2 目的', 'Q3 見てほしい人', 'Q4 年代', 'Q5 雰囲気', 'Q6 色',
-  'Q7 ロゴ', 'Q8 写真', 'Q9 載せたいページ', 'Q10 機能', 'Q11 更新担当',
-  'Q12 スマホ/PC', 'Q13 参考サイト', 'Q14 公開時期', 'Q15 予算',
-  '写真フォルダ'
-];
 
 // フォームの画面を表示（GitHubの最新版 → 読めなければ直前の版 → Apps Script内の index）
 function doGet() {
@@ -57,10 +50,15 @@ function uploadFile(folderKey, name, mimeType, base64) {
 }
 
 // フォームから呼ばれる：1回答を1行追加
+// data.fields は [[列名, 値], ...]。シートにない列名は右端に自動で追加する
 function submitAnswer(data) {
-  if (!data || !data.company || !Array.isArray(data.answers)) {
+  if (!data || !Array.isArray(data.fields) || data.fields.length > 80) {
     throw new Error('回答の形式が正しくありません');
   }
+  const fields = data.fields.map(p => [String(p[0]).slice(0, 40), p[1]]);
+  const company = (fields.find(p => p[0] === '会社名') || [])[1];
+  if (!company) throw new Error('会社名が入力されていません');
+
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try {
@@ -70,12 +68,18 @@ function submitAnswer(data) {
       const it = getRootFolder_().getFoldersByName(cleanKey_(data.folderKey));
       if (it.hasNext()) folderUrl = it.next().getUrl();
     }
-    const answers = data.answers.slice(0, 14);
-    while (answers.length < 14) answers.push('');
-    const row = [new Date(), data.company, data.name || '']
-      .concat(answers)
-      .map(v => safe_(v))
-      .concat([folderUrl]);
+    const all = [['送信日時', new Date()]].concat(fields).concat([['写真フォルダ', folderUrl]]);
+
+    const lastCol = sheet.getLastColumn();
+    let headers = lastCol ? sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(String) : [];
+    const missing = all.map(p => p[0]).filter((l, i, arr) => headers.indexOf(l) === -1 && arr.indexOf(l) === i);
+    if (missing.length) {
+      sheet.getRange(1, headers.length + 1, 1, missing.length).setValues([missing]).setFontWeight('bold');
+      sheet.setFrozenRows(1);
+      headers = headers.concat(missing);
+    }
+    const row = new Array(headers.length).fill('');
+    all.forEach(([label, v]) => { row[headers.indexOf(label)] = safe_(v); });
     sheet.appendRow(row);
   } finally {
     lock.releaseLock();
@@ -83,16 +87,9 @@ function submitAnswer(data) {
   return true;
 }
 
-// 「回答」シートがなければ作る。見出しが足りなければ付け直す
 function getSheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = ss.getSheetByName(SHEET_NAME);
-  if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
-  if (sheet.getLastColumn() < HEADERS.length) {
-    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold');
-    sheet.setFrozenRows(1);
-  }
-  return sheet;
+  return ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
 }
 
 function getRootFolder_() {
