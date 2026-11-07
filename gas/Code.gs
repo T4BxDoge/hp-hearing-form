@@ -7,6 +7,7 @@
 const SHEET_NAME = '回答';
 const ROOT_FOLDER_NAME = 'HPヒアリング添付';
 const COPY_HEADER = 'コピペ用（Claudeに貼る）';
+const ROW_HEIGHT = 28; // 回答の行の高さ（px）
 const FORM_URL = 'https://raw.githubusercontent.com/T4BxDoge/hp-hearing-form/main/index.html';
 
 // フォームの画面を表示（GitHubの最新版 → 読めなければ直前の版 → Apps Script内の index）
@@ -84,6 +85,7 @@ function submitAnswer(data) {
     all.forEach(([label, v]) => { row[headers.indexOf(label)] = safe_(v); });
     row[0] = buildCopyText_(all);
     sheet.appendRow(row);
+    fixRowHeight_(sheet, sheet.getLastRow(), 1);
   } finally {
     lock.releaseLock();
   }
@@ -133,6 +135,7 @@ function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('ヒアリング')
     .addItem('コピペ用を作り直す', 'rebuildCopyColumn')
+    .addItem('行の高さをそろえる', 'fixAllRowHeights')
     .addToUi();
 }
 
@@ -147,6 +150,24 @@ function rebuildCopyColumn() {
   const headers = values[0].map(String);
   const out = values.slice(1).map(r => [buildCopyText_(headers.map((h, i) => [h, r[i]]))]);
   sheet.getRange(2, 1, out.length, 1).setValues(out);
+}
+
+// 行の高さを固定する（長い文章は折り返さずセル内で切る。中身はセルを選ぶと見られる）
+function fixRowHeight_(sheet, startRow, numRows) {
+  if (numRows < 1) return;
+  const lastCol = Math.max(sheet.getLastColumn(), 1);
+  sheet.getRange(startRow, 1, numRows, lastCol)
+    .setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP)
+    .setVerticalAlignment('middle');
+  sheet.setRowHeightsForced(startRow, numRows, ROW_HEIGHT);
+}
+
+// 既にある行の高さをまとめてそろえる
+function fixAllRowHeights() {
+  const sheet = getSheet_();
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return;
+  fixRowHeight_(sheet, 2, lastRow - 1);
 }
 
 function getSheet_() {

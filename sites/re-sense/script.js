@@ -7,10 +7,9 @@ const SITE = {
   name: "株式会社RE.sense",
   url: "https://t4bxdoge.github.io/hp-hearing-form/sites/re-sense/",
   description: "オンラインサロンの運営、ホームページ制作、テレアポ代行",
-  founded: "20XX年（仮）",
-  hours: "平日 10:00〜19:00（仮）",
-  // 構造化データ用の営業時間（曜日・開始・終了）
-  openingHours: [{ days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "10:00", closes: "19:00" }],
+  // 営業時間を載せるときは、構造化データ用に曜日・開始・終了を入れる
+  // 例：[{ days: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "10:00", closes: "19:00" }]
+  openingHours: [],
   tel: "",            // 例："092-000-0000"（空なら表示しない）
   address: "",        // 例："福岡県福岡市中央区〇〇1-2-3"（空なら表示しない）
   lineUrl: "https://line.me/R/ti/p/@example", // 公式LINEの友だち追加URL（仮）
@@ -53,9 +52,9 @@ const SITE = {
     url: SITE.url,
     description: SITE.description,
     image: SITE.url + "images/ogp.png",
-    openingHoursSpecification: SITE.openingHours.map(h => ({ "@type": "OpeningHoursSpecification", dayOfWeek: h.days, opens: h.opens, closes: h.closes })),
     sameAs: [SITE.lineUrl, SITE.instagram].filter(Boolean)
   };
+  if (SITE.openingHours.length) ld.openingHoursSpecification = SITE.openingHours.map(h => ({ "@type": "OpeningHoursSpecification", dayOfWeek: h.days, opens: h.opens, closes: h.closes }));
   if (SITE.tel) ld.telephone = SITE.tel;
   if (SITE.address) ld.address = { "@type": "PostalAddress", streetAddress: SITE.address, addressCountry: "JP" };
   const ldEl = document.getElementById("ld");
