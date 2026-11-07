@@ -12,8 +12,8 @@ const SITE = {
   openingHours: [],
   tel: "",            // 例："092-000-0000"（空なら表示しない）
   address: "",        // 例："福岡県福岡市中央区〇〇1-2-3"（空なら表示しない）
-  lineUrl: "https://line.me/R/ti/p/@example", // 公式LINEの友だち追加URL（仮）
-  lineId: "@example（仮）",
+  lineUrl: "https://lin.ee/yh5nDKW", // 公式LINEの友だち追加URL
+  lineId: "",         // 例："@abc1234"（空なら表示しない）
   instagram: "",      // 例："https://www.instagram.com/xxxx/"
   formEndpoint: "",   // お問い合わせの送信先（GASのURL）。空ならデモ動作
   gaId: ""            // Googleアナリティクスの測定ID（例："G-XXXXXXX"）。空なら読み込まない
