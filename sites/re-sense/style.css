@@ -171,6 +171,11 @@ p{margin:0}
 .line-card{border:1px solid var(--line);padding:clamp(28px,5vw,56px);display:grid;gap:24px;justify-items:start;background:linear-gradient(160deg,var(--accent-soft),var(--bg) 60%)}
 @media (min-width:768px){.line-card{grid-template-columns:1fr auto;align-items:center;gap:40px}}
 .line-text{display:grid;gap:12px;min-width:0}
+.line-act{display:grid;gap:16px;justify-items:center}
+/* QRコードはPC（マウス操作の画面）だけに出す。スマホはボタンで追加 */
+.line-qr{display:none;margin:0;gap:10px;justify-items:center;text-align:center;font-size:16px;color:var(--muted);line-height:1.6}
+.line-qr img{display:block;width:168px;height:168px;background:#fff;padding:8px;border:1px solid var(--line)}
+@media (hover:hover) and (pointer:fine) and (min-width:768px){.line-qr{display:grid}}
 .line-lead{font-family:var(--serif-ja);font-weight:500;font-size:clamp(24px,3vw,30px);letter-spacing:.06em}
 .line-text>p:not(.line-lead){color:var(--muted)}
 

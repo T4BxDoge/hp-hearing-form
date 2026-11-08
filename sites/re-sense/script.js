@@ -158,6 +158,25 @@ document.querySelectorAll("[data-split]").forEach(el => {
   update();
 })();
 
+/* ---------- PCではLINEボタンを押すとQRコードの欄へ移動 ----------
+   LINEの友だち追加URLはPCで開くとQRコードの画面になるため、
+   ページ内のQRコードを見せてスマホで読み取ってもらう */
+(function lineOnPc() {
+  const pc = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 768px)");
+  const img = document.querySelector("#lineQr img");
+  if (!img) return;
+  const links = [...document.querySelectorAll('[data-site-href="lineUrl"]')].filter(a => !a.closest(".line-card"));
+  function apply() {
+    const useQr = pc.matches && img.complete && img.naturalWidth > 0;
+    links.forEach(a => {
+      if (useQr) { a.href = "#contact"; a.removeAttribute("target"); }
+      else { a.href = SITE.lineUrl; a.target = "_blank"; }
+    });
+  }
+  if (img.complete) apply(); else img.addEventListener("load", apply);
+  pc.addEventListener("change", apply);
+})();
+
 /* ---------- スマホのメニュー ---------- */
 (function menu() {
   const btn = document.getElementById("burger");
