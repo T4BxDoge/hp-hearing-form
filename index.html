@@ -142,6 +142,7 @@ const Q=[
  {id:"q15",t:"今、ホームページはありますか？",c:"今のHP",type:"radio",o:["ある","ない"],other:"あればURLを入力"},
  {id:"q16",t:"「こんな感じがいい」と思うサイトはありますか？",c:"参考サイト",hint:"同業他社や好きなお店のサイトなど。URLやお店の名前だけでも大丈夫です",type:"textarea",ph:"例：〇〇さんのホームページの、写真が大きい感じが好き"},
  {id:"q17a",t:"公開後の文章や写真の修正・更新は、どうしたいですか？",c:"更新の担当",hint:"おまかせの場合、月額管理費に軽微な修正 月2回（合計30分以内）が含まれます",type:"radio",o:["自分たちで修正・更新したい","おまかせしたい","簡単なものは自分たちで、それ以外はおまかせ","まだ決めていない"]},
+ {id:"q17b",t:"自分たちで更新したいのはどれですか？",c:"自分で更新したい内容",hint:"いくつ選んでもOKです",type:"check",o:["お知らせ・新着情報","料金・メニュー","営業時間・定休日","写真","ブログ・コラム","文章全般","デザインやレイアウト"],other:"ほかにあれば",when:{id:"q17a",v:["自分たちで修正・更新したい","簡単なものは自分たちで、それ以外はおまかせ"]}},
  {id:"q17",t:"公開したあと、どのくらい内容を変えそうですか？",c:"更新頻度",type:"radio",o:["ほとんど変えない","月に1〜2回くらい","月に3回以上","わからない"]},
  {id:"q18",t:"いつ頃までに公開したいですか？",c:"公開時期",type:"radio",o:["1ヶ月以内","2〜3ヶ月以内","半年以内","特に決まっていない"]},
  {id:"q19",t:"公開前に、無料のデザインデモ（見本）を見たいですか？",c:"デザインデモ",type:"radio",o:["見たい","なくてよい"]},
@@ -169,7 +170,10 @@ f.innerHTML=Q.map((q,i)=>{
 }).join("")+`<div class="actions" style="margin-top:4px"><p class="msg" id="msg" hidden></p><button type="submit" class="primary">回答を送信する</button></div>`;
 f.style.display="flex";f.style.flexDirection="column";f.style.gap="18px";
 
+// 条件付きの質問（when）が今表示されているか
+const shown=q=>!q.when||[...f.querySelectorAll(`input[name="${q.when.id}"]:checked`)].some(x=>q.when.v.includes(x.value));
 const val=q=>{
+  if(!shown(q))return "";
   if(q.type==="text2"){const a=f[q.id+"-a"].value.trim(),b=f[q.id+"-b"].value.trim();return (q.reqFirst&&!a)?"":[a,b].filter(Boolean).join(" / ")}
   if(q.type==="textarea")return f[q.id].value.trim();
   const v=[...f.querySelectorAll(`input[name="${q.id}"]:checked`)].map(x=>x.value);
@@ -180,8 +184,13 @@ const val=q=>{
 const KEY="hp-hearing-draft";
 function save(){try{const d={};f.querySelectorAll("input:not([type=file]),textarea").forEach(e=>{d[e.id]=(e.type==="radio"||e.type==="checkbox")?e.checked:e.value});localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||"{}");Object.entries(d).forEach(([k,v])=>{const e=document.getElementById(k);if(!e)return;if(e.type==="radio"||e.type==="checkbox")e.checked=v;else e.value=v})}catch(e){}}
-document.getElementById("total").textContent=Q.length;
-function upd(){const n=Q.filter(q=>val(q)).length;document.getElementById("bar").style.width=(n/Q.length*100)+"%";document.getElementById("count").textContent=n+" / "+Q.length}
+// 条件に合わない質問を隠し、表示中の質問だけで番号を振り直す
+function syncShown(){
+  let no=0;
+  Q.forEach(q=>{const fs=document.getElementById("fs-"+q.id),vis=shown(q);fs.hidden=!vis;if(vis)fs.querySelector(".no").textContent="Q"+(++no)});
+  document.getElementById("total").textContent=no;
+}
+function upd(){syncShown();const vis=Q.filter(shown),n=vis.filter(q=>val(q)).length;document.getElementById("bar").style.width=(n/vis.length*100)+"%";document.getElementById("count").textContent=n+" / "+vis.length}
 load();upd();
 f.addEventListener("input",()=>{upd();save()});
 f.addEventListener("change",()=>{upd();save()});
@@ -220,10 +229,10 @@ const run=(fn,...a)=>new Promise((res,rej)=>google.script.run.withSuccessHandler
 
 f.addEventListener("submit",async e=>{
   e.preventDefault();
-  const miss=Q.filter(q=>q.req&&!val(q));
+  const miss=Q.filter(q=>q.req&&shown(q)&&!val(q));
   Q.forEach(q=>document.getElementById("fs-"+q.id).classList.toggle("err",miss.includes(q)));
   const m=document.getElementById("msg");
-  if(miss.length){m.hidden=false;m.textContent="必須の質問（"+miss.map(q=>"Q"+(Q.indexOf(q)+1)).join("・")+"）にお答えください。";document.getElementById("fs-"+miss[0].id).scrollIntoView({behavior:"smooth",block:"center"});return}
+  if(miss.length){m.hidden=false;m.textContent="必須の質問（"+miss.map(q=>document.querySelector("#fs-"+q.id+" .no").textContent).join("・")+"）にお答えください。";document.getElementById("fs-"+miss[0].id).scrollIntoView({behavior:"smooth",block:"center"});return}
   m.hidden=true;
   const btn=f.querySelector('button[type=submit]');btn.disabled=true;
   const company=f["q1-a"].value.trim();
