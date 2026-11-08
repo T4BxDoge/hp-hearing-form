@@ -102,16 +102,10 @@ p{margin:0}
 .scroll{display:inline-flex;align-items:center;gap:12px;margin-top:24px;min-height:44px;text-decoration:none;font-family:var(--serif-en);font-style:italic;font-size:16px;color:var(--muted);animation:fadeUp 1s var(--ease) .8s both}
 .scroll::before{content:"";width:1px;height:44px;background:linear-gradient(var(--ink) 50%,var(--line) 50%);background-size:100% 200%;animation:scrollLine 2s var(--ease) infinite}
 
-.lines{position:absolute;width:min(640px,120vw);right:-12%;top:50%;transform:translateY(-50%);fill:none;stroke:#d2d8dd;stroke-width:1.2;shape-rendering:geometricPrecision;animation:spin 80s linear infinite}
-.lines circle,.lines line{vector-effect:non-scaling-stroke}
-.lines circle,.lines line{stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.4s var(--ease) .2s forwards}
-.lines line{animation-delay:.6s}
-.ripple{position:absolute;z-index:1;right:calc(-12% + min(320px,60vw));top:50%;width:0;height:0}
-.ripple i{position:absolute;left:-170px;top:-170px;width:340px;height:340px;border-radius:50%;border:1.5px solid var(--accent);transform:scale(.035);animation:ripple 6s cubic-bezier(.2,.6,.3,1) infinite;opacity:0}
-.ripple i:nth-child(1){left:-7px;top:-7px;width:14px;height:14px;border:0;background:var(--accent);transform:none;animation:dotPulse 3s ease-in-out infinite;opacity:1}
-.ripple i:nth-child(3){animation-delay:2s}
-.ripple i:nth-child(4){animation-delay:4s}
-@media (max-width:767px){.lines{right:-62%;top:14%;opacity:.55}.ripple{right:calc(-62% + min(320px,60vw));top:14%;opacity:.75}.eyebrow{font-size:16px}}
+
+/* ヒーローのグラフィック（canvasで画面の解像度に合わせて描く） */
+.hero-art{position:absolute;z-index:0;width:min(640px,120vw);aspect-ratio:1/1;max-width:none;right:-12%;top:50%;transform:translateY(-50%);pointer-events:none}
+@media (max-width:767px){.hero-art{right:-62%;top:16%;opacity:.6}.eyebrow{font-size:16px}}
 
 /* 流れる文字 */
 .marquee{overflow:hidden;border-bottom:1px solid var(--line);padding-block:18px;white-space:nowrap}
@@ -174,32 +168,11 @@ p{margin:0}
 .flow p{color:var(--muted)}
 
 /* お問い合わせ */
-.contact-grid{display:grid;gap:24px}
-@media (min-width:900px){.contact-grid{grid-template-columns:1fr 1fr;gap:40px;align-items:start}}
-.line-card{border:1px solid var(--line);padding:clamp(28px,5vw,48px);display:grid;gap:18px;justify-items:start;background:linear-gradient(160deg,var(--accent-soft),var(--bg) 60%)}
-.line-lead{font-family:var(--serif-ja);font-weight:500;font-size:26px;letter-spacing:.06em}
-.line-card>p:not(.line-lead){color:var(--muted)}
-.line-id{font-size:16px}
-.form{display:grid;gap:18px;min-width:0}
-.form-lead{font-weight:500}
-.fld{display:grid;gap:6px;min-width:0}
-.fld label{font-size:16px;color:var(--muted)}
-.fld input,.fld select,.fld textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:0;border-bottom:1px solid var(--line);border-radius:0;padding:12px 2px;min-height:48px;transition:border-color .3s;-webkit-appearance:none;appearance:none}
-.fld select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(-45deg,transparent 50%,var(--muted) 50%);background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px;background-repeat:no-repeat}
-.fld textarea{resize:vertical;min-height:140px}
-.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-bottom-color:var(--accent);box-shadow:0 1px 0 var(--accent)}
-.agree{display:flex;gap:12px;align-items:center;min-height:44px;cursor:pointer}
-.agree input{width:22px;height:22px;accent-color:var(--accent);flex:none}
-.agree a{color:var(--accent);display:inline-block;padding-block:12px;margin-block:-12px}
-.err{color:#b3261e}
-.ok{border:1px solid var(--accent);background:var(--accent-soft);padding:14px 16px}
-.privacy{margin-top:48px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.privacy summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:56px;font-weight:500}
-.privacy summary::-webkit-details-marker{display:none}
-.privacy summary::after{content:"";width:12px;height:12px;border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);transform:rotate(45deg) translateY(-4px);transition:transform .4s var(--ease)}
-.privacy[open] summary::after{transform:rotate(-135deg) translateY(-4px)}
-.privacy-body{display:grid;gap:8px;padding:8px 0 28px;color:var(--muted);max-width:44em;animation:fadeUp .6s var(--ease) both}
-.privacy-body h3{font-size:16px;font-weight:700;color:var(--ink);margin-top:12px}
+.line-card{border:1px solid var(--line);padding:clamp(28px,5vw,56px);display:grid;gap:24px;justify-items:start;background:linear-gradient(160deg,var(--accent-soft),var(--bg) 60%)}
+@media (min-width:768px){.line-card{grid-template-columns:1fr auto;align-items:center;gap:40px}}
+.line-text{display:grid;gap:12px;min-width:0}
+.line-lead{font-family:var(--serif-ja);font-weight:500;font-size:clamp(24px,3vw,30px);letter-spacing:.06em}
+.line-text>p:not(.line-lead){color:var(--muted)}
 
 /* フッター */
 .ft{border-top:1px solid var(--line)}
@@ -226,9 +199,6 @@ p{margin:0}
 @keyframes chIn{from{opacity:0;transform:translateY(.6em)}to{opacity:1;transform:none}}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes redraw{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
-@keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
-@keyframes ripple{0%{transform:scale(.035);opacity:.8}100%{transform:scale(1);opacity:0}}
-@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(79,120,137,.35)}50%{box-shadow:0 0 0 8px rgba(79,120,137,0)}}
 @keyframes marquee{to{transform:translateX(-50%)}}
 @keyframes scrollLine{0%{background-position:0 100%}100%{background-position:0 -100%}}
 @keyframes ping{0%{transform:scale(1);opacity:.6}80%,100%{transform:scale(1.25);opacity:0}}

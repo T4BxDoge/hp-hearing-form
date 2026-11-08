@@ -15,7 +15,6 @@ const SITE = {
   lineUrl: "https://lin.ee/yh5nDKW", // 公式LINEの友だち追加URL
   lineId: "",         // 例："@abc1234"（空なら表示しない）
   instagram: "",      // 例："https://www.instagram.com/xxxx/"
-  formEndpoint: "",   // お問い合わせの送信先（GASのURL）。空ならデモ動作
   gaId: ""            // Googleアナリティクスの測定ID（例："G-XXXXXXX"）。空なら読み込まない
 };
 
@@ -175,51 +174,95 @@ document.querySelectorAll("[data-split]").forEach(el => {
   window.addEventListener("resize", () => { if (window.innerWidth > 900) setOpen(false); });
 })();
 
-/* ---------- プライバシーポリシーを開く ---------- */
-document.querySelectorAll(".open-privacy").forEach(a => a.addEventListener("click", () => {
-  const d = document.getElementById("privacy");
-  if (d) d.open = true;
-}));
+/* ---------- ヒーローのグラフィック ----------
+   画面の解像度（Retinaなど）に合わせてcanvasに毎フレーム描くので、拡大・回転してもぼやけない */
+(function heroArt() {
+  const cv = document.getElementById("heroArt");
+  if (!cv || !cv.getContext) return;
+  const ctx = cv.getContext("2d");
+  const css = getComputedStyle(document.documentElement);
+  const C = {
+    line: "#d2d8dd",
+    accent: css.getPropertyValue("--accent").trim() || "#4f7889"
+  };
+  const hex = C.accent.replace("#", "");
+  const rgb = [0, 2, 4].map(i => parseInt(hex.slice(i, i + 2), 16)).join(",");
+  let W = 0, dpr = 1, running = true, start = performance.now();
 
-/* ---------- お問い合わせフォーム ---------- */
-(function form() {
-  const f = document.getElementById("form");
-  if (!f) return;
-  const field = n => f.elements.namedItem(n);
-  const err = document.getElementById("f-err");
-  const ok = document.getElementById("f-ok");
-  f.addEventListener("submit", async e => {
-    e.preventDefault();
-    err.hidden = true; ok.hidden = true;
-    const missing = [];
-    if (!field("name").value.trim()) missing.push("お名前");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field("email").value.trim())) missing.push("メールアドレス");
-    if (!field("message").value.trim()) missing.push("メッセージ");
-    if (missing.length) { err.textContent = missing.join("・") + "を入力してください。"; err.hidden = false; return; }
-    if (!field("agree").checked) { err.textContent = "プライバシーポリシーへの同意にチェックしてください。"; err.hidden = false; return; }
+  function resize() {
+    const r = cv.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 3);
+    W = r.width;
+    cv.width = Math.round(r.width * dpr);
+    cv.height = Math.round(r.height * dpr);
+  }
+  const ease = t => 1 - Math.pow(1 - Math.min(Math.max(t, 0), 1), 3);
 
-    if (!SITE.formEndpoint) {
-      ok.textContent = "デザインデモのため、このフォームからは送信されません。公開版ではここからお問い合わせが届きます。";
-      ok.hidden = false;
-      return;
+  function draw(now) {
+    const t = (now - start) / 1000;
+    const s = W / 600;              // 600×600 の座標で描く
+    ctx.setTransform(dpr * s, 0, 0, dpr * s, 0, 0);
+    ctx.clearRect(0, 0, 600, 600);
+    ctx.lineCap = "round";
+
+    // 円と十字の線（最初の2.4秒で描かれ、その後ゆっくり回る）
+    const rot = reduceMotion ? 0 : (t / 80) * Math.PI * 2;
+    const p1 = reduceMotion ? 1 : ease((t - 0.2) / 2.4);
+    const p2 = reduceMotion ? 1 : ease((t - 0.6) / 2.4);
+    ctx.save();
+    ctx.translate(300, 300);
+    ctx.rotate(rot);
+    ctx.strokeStyle = C.line;
+    ctx.lineWidth = 1.2 / s;        // 画面上で常に約1.2pxの線
+    [250, 180].forEach(r => {
+      ctx.beginPath();
+      ctx.arc(0, 0, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * p1);
+      ctx.stroke();
+    });
+    const L = 280 * p2;
+    ctx.beginPath();
+    ctx.moveTo(-L, 0); ctx.lineTo(L, 0);
+    ctx.moveTo(0, -L); ctx.lineTo(0, L);
+    ctx.stroke();
+    ctx.restore();
+
+    // 中心から広がる波紋（3本を2秒ずつずらして6秒周期）
+    if (!reduceMotion) {
+      for (let k = 0; k < 3; k++) {
+        const ph = ((t + k * 2) % 6) / 6;
+        const r = 8 + ph * 170;
+        const a = 0.8 * (1 - ph) * (1 - ph);
+        ctx.beginPath();
+        ctx.arc(300, 300, r, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(" + rgb + "," + a.toFixed(3) + ")";
+        ctx.lineWidth = 1.5 / s;
+        ctx.stroke();
+      }
     }
-    const btn = f.querySelector("button[type=submit]");
-    btn.disabled = true;
-    try {
-      await fetch(SITE.formEndpoint, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ name: field("name").value.trim(), email: field("email").value.trim(), kind: field("kind").value, message: field("message").value.trim() })
-      });
-      f.reset();
-      ok.textContent = "送信しました。内容を確認して、折り返しご連絡します。";
-      ok.hidden = false;
-    } catch (_) {
-      err.textContent = "送信できませんでした。通信状況を確認するか、LINEからご連絡ください。";
-      err.hidden = false;
-    } finally {
-      btn.disabled = false;
-    }
-  });
+
+    // 中心の点と、ゆっくり脈打つ輪
+    const pulse = reduceMotion ? 0 : (Math.sin(t * Math.PI * 2 / 3) + 1) / 2;
+    ctx.beginPath();
+    ctx.arc(300, 300, (7 + pulse * 8) / s, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(" + rgb + "," + (0.18 * (1 - pulse)).toFixed(3) + ")";
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(300, 300, 7 / s, 0, Math.PI * 2);
+    ctx.fillStyle = C.accent;
+    ctx.fill();
+
+    if (running && !reduceMotion) requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener("resize", () => { resize(); if (reduceMotion) draw(performance.now()); });
+  // 画面外にあるときは止めて電池を節約
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([e]) => {
+      const was = running;
+      running = e.isIntersecting;
+      if (running && !was && !reduceMotion) requestAnimationFrame(draw);
+    }).observe(cv);
+  }
+  requestAnimationFrame(draw);
 })();
