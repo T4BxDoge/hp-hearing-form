@@ -33,8 +33,6 @@ p{margin:0}
 .progress{position:fixed;inset:0 0 auto;height:2px;z-index:60;pointer-events:none}
 .progress span{display:block;height:100%;width:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)}
 
-/* デモの帯 */
-.demo{background:var(--ink);color:var(--bg);font-size:16px;line-height:1.6;text-align:center;padding:8px 16px}
 
 /* ヘッダー */
 .hd{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent;transition:transform .45s var(--ease),border-color .3s}
@@ -104,15 +102,16 @@ p{margin:0}
 .scroll{display:inline-flex;align-items:center;gap:12px;margin-top:24px;min-height:44px;text-decoration:none;font-family:var(--serif-en);font-style:italic;font-size:16px;color:var(--muted);animation:fadeUp 1s var(--ease) .8s both}
 .scroll::before{content:"";width:1px;height:44px;background:linear-gradient(var(--ink) 50%,var(--line) 50%);background-size:100% 200%;animation:scrollLine 2s var(--ease) infinite}
 
-.lines{position:absolute;width:min(640px,120vw);right:-12%;top:50%;transform:translateY(-50%);fill:none;stroke:var(--line);stroke-width:1;animation:spin 80s linear infinite}
+.lines{position:absolute;width:min(640px,120vw);right:-12%;top:50%;transform:translateY(-50%);fill:none;stroke:#d2d8dd;stroke-width:1.2;shape-rendering:geometricPrecision;animation:spin 80s linear infinite}
+.lines circle,.lines line{vector-effect:non-scaling-stroke}
 .lines circle,.lines line{stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.4s var(--ease) .2s forwards}
 .lines line{animation-delay:.6s}
-.ripple{position:absolute;right:calc(-12% + min(320px,60vw));top:50%;width:0;height:0}
-.ripple i{position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;border:1px solid var(--accent);animation:ripple 6s cubic-bezier(.2,.6,.3,1) infinite;opacity:0}
-.ripple i:nth-child(1){background:var(--accent);animation:dotPulse 3s ease-in-out infinite;opacity:1}
+.ripple{position:absolute;z-index:1;right:calc(-12% + min(320px,60vw));top:50%;width:0;height:0}
+.ripple i{position:absolute;left:-170px;top:-170px;width:340px;height:340px;border-radius:50%;border:1.5px solid var(--accent);transform:scale(.035);animation:ripple 6s cubic-bezier(.2,.6,.3,1) infinite;opacity:0}
+.ripple i:nth-child(1){left:-7px;top:-7px;width:14px;height:14px;border:0;background:var(--accent);transform:none;animation:dotPulse 3s ease-in-out infinite;opacity:1}
 .ripple i:nth-child(3){animation-delay:2s}
 .ripple i:nth-child(4){animation-delay:4s}
-@media (max-width:767px){.lines{right:-62%;top:14%;opacity:.55}.ripple{right:calc(-62% + min(320px,60vw));top:14%;opacity:.6}.eyebrow{font-size:16px}}
+@media (max-width:767px){.lines{right:-62%;top:14%;opacity:.55}.ripple{right:calc(-62% + min(320px,60vw));top:14%;opacity:.75}.eyebrow{font-size:16px}}
 
 /* 流れる文字 */
 .marquee{overflow:hidden;border-bottom:1px solid var(--line);padding-block:18px;white-space:nowrap}
@@ -228,8 +227,8 @@ p{margin:0}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes redraw{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
 @keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
-@keyframes ripple{0%{transform:scale(1);opacity:.7}100%{transform:scale(28);opacity:0}}
-@keyframes dotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+@keyframes ripple{0%{transform:scale(.035);opacity:.8}100%{transform:scale(1);opacity:0}}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(79,120,137,.35)}50%{box-shadow:0 0 0 8px rgba(79,120,137,0)}}
 @keyframes marquee{to{transform:translateX(-50%)}}
 @keyframes scrollLine{0%{background-position:0 100%}100%{background-position:0 -100%}}
 @keyframes ping{0%{transform:scale(1);opacity:.6}80%,100%{transform:scale(1.25);opacity:0}}
