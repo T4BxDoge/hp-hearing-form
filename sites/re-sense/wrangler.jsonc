@@ -1,0 +1,9 @@
+// Cloudflare（Workers）でこのフォルダを公開するための設定
+// name はCloudflareのプロジェクト名と同じにする
+{
+  "name": "resense",
+  "compatibility_date": "2025-11-01",
+  "assets": {
+    "directory": "./"
+  }
+}
