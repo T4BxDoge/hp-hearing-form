@@ -5,7 +5,7 @@
    ========================================================= */
 const SITE = {
   name: "株式会社RE.sense",
-  url: "https://t4bxdoge.github.io/hp-hearing-form/sites/re-sense/",
+  url: "https://resense-inc.com/",
   description: "オンラインサロンの運営、ホームページ制作、テレアポ代行",
   // 営業時間を載せるときは、構造化データ用に曜日・開始・終了を入れる
   // 例：[{ days: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "10:00", closes: "19:00" }]
