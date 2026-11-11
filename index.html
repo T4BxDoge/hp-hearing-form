@@ -64,6 +64,7 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .flist{list-style:none;margin:10px 0 0;padding:0;font-size:.85rem;display:flex;flex-direction:column;gap:4px}
 .flist li{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .flist li span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fwarn{margin:8px 0 0!important;color:var(--warn)!important}
 .flist button{padding:2px 8px;border:none;background:none;color:var(--warn);font-size:.85rem;font-weight:500}
 .plan{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:16px 18px}
 .plan h2{font-family:var(--display);font-size:1rem;margin:0 0 10px}
@@ -124,6 +125,8 @@ button:disabled{opacity:.6;cursor:wait}
 </div>
 
 <script>
+// 色見本（メイン・サブの質問で共通）
+const SW=[["青","#3b6fb6"],["緑","#3f9a62"],["赤","#c8423a"],["オレンジ","#e58b2f"],["黄","#e8c43a"],["ピンク","#e07ba4"],["紫","#7e5bb0"],["茶","#8a6142"],["黒・グレー","#4a4a4a"],["白","#ffffff"]];
 const Q=[
  {id:"q1",t:"会社名とご担当者さまのお名前",type:"text2",req:true,reqFirst:true,ph:["会社名","お名前"],col:["会社名","担当者名"]},
  {id:"q2",t:"ご連絡先を教えてください",hint:"打ち合わせは原則LINEで行います。どちらか片方だけでも大丈夫です",type:"text2",req:true,ph:["LINEの名前（表示名）","電話番号"],col:["LINE名","電話番号"]},
@@ -133,9 +136,10 @@ const Q=[
  {id:"q6",t:"ホームページを作る一番の目的は？",c:"目的",type:"radio",req:true,o:["会社のことを知ってもらう","問い合わせ・相談を増やす","スタッフを採用したい","お店に来てほしい","今のサイトが古いので新しくしたい"],other:true},
  {id:"q7",t:"主にどんな人に見てほしいですか？",c:"見てほしい人",hint:"いくつ選んでもOKです",type:"check",o:["一般のお客さま","取引先・企業","求職者（働きたい人）","地域の方","まだわからない"]},
  {id:"q8",t:"全体の雰囲気はどれが近いですか？",c:"雰囲気",type:"radio",req:true,o:["きっちり・信頼感","明るく・親しみやすい","おしゃれ・洗練された","温かい・ナチュラル","力強い・元気"]},
- {id:"q9",t:"使いたい色はありますか？",c:"色",hint:"会社のイメージカラーがあれば教えてください",type:"check",o:[["青","#3b6fb6"],["緑","#3f9a62"],["赤","#c8423a"],["オレンジ","#e58b2f"],["黄","#e8c43a"],["ピンク","#e07ba4"],["紫","#7e5bb0"],["茶","#8a6142"],["黒・グレー","#4a4a4a"],["白・シンプル","#ffffff"],"おまかせ"],other:"色の名前やカラーコード"},
- {id:"q10",t:"会社のロゴはありますか？",c:"ロゴ",type:"radio",o:["あり（データもある）","あり（データはない）","ない"]},
- {id:"q11",t:"ホームページに使う写真はどうしますか？",c:"写真",type:"radio",files:true,o:["自分たちで用意できる","イメージ写真（素材）でOK","わからない"]},
+ {id:"q9",t:"メインの色はどれがいいですか？",c:"メインカラー",hint:"ホームページ全体の印象を決める色です。会社のイメージカラーがあれば、その色を選んでください",type:"radio",o:[...SW,"おまかせ"],other:"その他の色・カラーコード"},
+ {id:"q9b",t:"サブの色（ポイントで使う色）はどれがいいですか？",c:"サブカラー",hint:"ボタンや見出しなど、メインの色を引き立てる色です",type:"radio",o:[...SW,"なし（メインの色だけ）","おまかせ"],other:"その他の色・カラーコード"},
+ {id:"q10",t:"会社のロゴはありますか？",c:"ロゴ",type:"radio",o:["あり（データもある）","あり（データはない）","ない"],upload:{when:"あり（データもある）",max:3,label:"ロゴのデータを選ぶ",prefix:"ロゴ_",shrink:false,text:"ロゴの画像（PNG・JPG・SVGなど）を添付してください（3つまで・1つ10MBまで）。Illustratorのデータ（.ai）やPDFしかない場合は、あとでLINEで送っていただいても大丈夫です。"}},
+ {id:"q11",t:"ホームページに使う写真はどうしますか？",c:"写真",type:"radio",o:["自分たちで用意できる","イメージ写真（素材）でOK","なし"],upload:{when:"自分たちで用意できる",max:10,label:"写真を選ぶ",prefix:"写真_",shrink:true,text:"使いたい写真があれば添付してください（10枚まで）。あとからLINEなどで送っていただいても大丈夫です。"}},
  {id:"q12",t:"ほかに載せたい内容はありますか？",c:"載せたい内容",hint:"「会社紹介」「サービス紹介」「お問い合わせ」は基本で入っています。選んだ内容は1ページの中にまとめます",type:"check",o:["料金・メニュー","実績・施工例","お客さまの声","スタッフ紹介","よくある質問","営業時間・定休日","アクセス・地図","採用情報","SNSへのリンク"],other:"ほかに入れたいもの"},
  {id:"q13",t:"お問い合わせはどの方法で受けたいですか？",c:"問い合わせ方法",hint:"いくつ選んでもOKです",type:"check",o:["お問い合わせフォーム","電話","LINE","メール","Instagram"]},
  {id:"q14",t:"ドメイン（〇〇.com など）はお持ちですか？",c:"ドメイン",hint:"ドメインはホームページの住所のようなものです。取得・更新の費用は実費で別途かかります",type:"radio",o:["持っている","持っていない（取得してほしい）","わからない"]},
@@ -149,7 +153,6 @@ const Q=[
  {id:"q17b",t:"自分たちで更新したいのはどれですか？",c:"自分で更新したい内容",hint:"いくつ選んでもOKです",type:"check",o:["お知らせ・新着情報","料金・メニュー","営業時間・定休日","写真","ブログ・コラム","文章全般","デザインやレイアウト"],other:"ほかにあれば",when:{id:"q17a",v:["自分たちで修正・更新したい","簡単なものは自分たちで、それ以外はおまかせ"]}},
  {id:"q17",t:"公開したあと、どのくらい内容を変えそうですか？",c:"更新頻度",type:"radio",o:["ほとんど変えない","月に1〜2回くらい","月に3回以上","わからない"]},
  {id:"q18",t:"いつ頃までに公開したいですか？",c:"公開時期",type:"radio",o:["1ヶ月以内","2〜3ヶ月以内","半年以内","特に決まっていない"]},
- {id:"q19",t:"公開前に、無料のデザインデモ（見本）を見たいですか？",c:"デザインデモ",type:"radio",o:["見たい","なくてよい"]},
  {id:"q20",t:"そのほか、ご要望やご質問があればどうぞ",c:"その他要望",type:"textarea",ph:"例：Instagramの投稿もホームページに表示したい"}
 ];
 const f=document.getElementById("f");
@@ -171,7 +174,7 @@ f.innerHTML=Q.map((q,i)=>{
       return `<label><input type="${t}" name="${q.id}" id="${q.id}-${j}" value="${esc(lab)}"><span>${col?`<i class="sw" style="background:${col}"></i>`:""}${esc(lab)}</span></label>`}).join("");
     if(q.other===true)h+=`<label><input type="${t}" name="${q.id}" id="${q.id}-x" value="その他"><span>その他</span></label>`;
     h+=`</div>`;
-    if(q.files)h+=`<div class="files" id="filebox" hidden><p>使いたい写真があれば添付してください（10枚まで）。あとからメールなどで送っていただいても大丈夫です。</p><label class="pick">写真を選ぶ<input type="file" id="photo-file" accept="image/*" multiple></label><ul class="flist" id="flist"></ul></div>`;
+    if(q.upload)h+=`<div class="files" id="up-${q.id}" hidden><p>${esc(q.upload.text)}</p><label class="pick">${esc(q.upload.label)}<input type="file" id="file-${q.id}" accept="image/*" multiple></label><p class="fwarn" id="fw-${q.id}" hidden></p><ul class="flist" id="fl-${q.id}"></ul></div>`;
     if(q.other)h+=`<input type="text" class="other" id="${q.id}-o" name="${q.id}-o" placeholder="${q.other===true?"その他の場合はこちらに":esc(q.other)}">`;
   }
   return h+`</fieldset>`;
@@ -204,19 +207,22 @@ load();upd();
 f.addEventListener("input",()=>{upd();save()});
 f.addEventListener("change",()=>{upd();save()});
 
-// 写真の添付
-const MAXF=10;let picked=[];
-const box=document.getElementById("filebox"),fl=document.getElementById("flist");
-const photoQ=Q.find(q=>q.files);
-const ownPhotos=()=>document.getElementById(photoQ.id+"-0").checked;
-function syncBox(){box.hidden=!ownPhotos()}
-function drawList(){fl.innerHTML=picked.map((p,i)=>`<li><span>${esc(p.name)}</span><button type="button" data-i="${i}">削除</button></li>`).join("")}
-document.getElementById("photo-file").addEventListener("change",e=>{
-  const fs=[...e.target.files].filter(x=>/^image\//.test(x.type));
-  picked=picked.concat(fs).slice(0,MAXF);e.target.value="";drawList();
+// ファイルの添付（写真・ロゴ）。選択肢が「when」のときだけ添付欄を出す
+const UP=Q.filter(q=>q.upload).map(q=>({q,picked:[],box:document.getElementById("up-"+q.id),fl:document.getElementById("fl-"+q.id),warn:document.getElementById("fw-"+q.id)}));
+const upActive=u=>shown(u.q)&&[...f.querySelectorAll(`input[name="${u.q.id}"]:checked`)].some(x=>x.value===u.q.upload.when);
+function syncBoxes(){UP.forEach(u=>u.box.hidden=!upActive(u))}
+function drawList(u){u.fl.innerHTML=u.picked.map((p,i)=>`<li><span>${esc(p.name)}</span><button type="button" data-i="${i}">削除</button></li>`).join("")}
+UP.forEach(u=>{
+  document.getElementById("file-"+u.q.id).addEventListener("change",e=>{
+    const all=[...e.target.files].filter(x=>/^image\//.test(x.type));
+    const big=u.q.upload.shrink?[]:all.filter(x=>x.size>10*1024*1024);
+    const ok=all.filter(x=>!big.includes(x));
+    u.picked=u.picked.concat(ok).slice(0,u.q.upload.max);e.target.value="";drawList(u);
+    u.warn.hidden=!big.length;u.warn.textContent=big.length?"10MBを超えるファイルは添付できませんでした："+big.map(x=>x.name).join("、"):"";
+  });
+  u.fl.addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(b){u.picked.splice(+b.dataset.i,1);drawList(u)}});
 });
-fl.addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(b){picked.splice(+b.dataset.i,1);drawList()}});
-f.addEventListener("change",syncBox);syncBox();
+f.addEventListener("change",syncBoxes);syncBoxes();
 // 大きい写真は長い辺2400pxに縮めてから送る
 function shrink(file){
   return new Promise(res=>{
@@ -246,13 +252,14 @@ f.addEventListener("submit",async e=>{
   const btn=f.querySelector('button[type=submit]');btn.disabled=true;
   const company=f["q1-a"].value.trim();
   const d=new Date(),pad=n=>String(n).padStart(2,"0");
-  const files=ownPhotos()?picked:[];
+  const files=UP.flatMap(u=>upActive(u)?u.picked.map(file=>({file,u})):[]);
   const folderKey=files.length?`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}_${company}`:"";
   try{
     for(let i=0;i<files.length;i++){
-      btn.textContent=`写真を送信しています（${i+1} / ${files.length}）…`;
-      const blob=await shrink(files[i]);
-      await run("uploadFile",folderKey,blob.name||files[i].name,blob.type||"image/jpeg",await toB64(blob));
+      const {file,u}=files[i];
+      btn.textContent=`ファイルを送信しています（${i+1} / ${files.length}）…`;
+      const blob=u.q.upload.shrink?await shrink(file):file;
+      await run("uploadFile",folderKey,u.q.upload.prefix+(blob.name||file.name),blob.type||file.type||"image/png",await toB64(blob));
     }
     btn.textContent="送信しています…";
     const fields=[];
