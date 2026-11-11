@@ -139,6 +139,10 @@ const Q=[
  {id:"q12",t:"ほかに載せたい内容はありますか？",c:"載せたい内容",hint:"「会社紹介」「サービス紹介」「お問い合わせ」は基本で入っています。選んだ内容は1ページの中にまとめます",type:"check",o:["料金・メニュー","実績・施工例","お客さまの声","スタッフ紹介","よくある質問","営業時間・定休日","アクセス・地図","採用情報","SNSへのリンク"],other:"ほかに入れたいもの"},
  {id:"q13",t:"お問い合わせはどの方法で受けたいですか？",c:"問い合わせ方法",hint:"いくつ選んでもOKです",type:"check",o:["お問い合わせフォーム","電話","LINE","メール","Instagram"]},
  {id:"q14",t:"ドメイン（〇〇.com など）はお持ちですか？",c:"ドメイン",hint:"ドメインはホームページの住所のようなものです。取得・更新の費用は実費で別途かかります",type:"radio",o:["持っている","持っていない（取得してほしい）","わからない"]},
+ {id:"q14a",t:"お持ちのドメイン名を教えてください",c:"お持ちのドメイン",type:"text",ph:"例：〇〇.com",when:{id:"q14",v:["持っている"]}},
+ {id:"q14b",t:"そのドメインはどこで取得しましたか？",c:"ドメインの取得先",hint:"分からなければ「わからない」で大丈夫です",type:"radio",o:["お名前.com","エックスサーバー","ムームードメイン","制作会社などに任せている","わからない"],other:true,when:{id:"q14",v:["持っている"]}},
+ {id:"q14c",t:"そのドメインでメールを使っていますか？",c:"ドメインのメール利用",hint:"例：info@〇〇.com のようなメールアドレスを使っているか",type:"radio",o:["使っている","使っていない","わからない"],when:{id:"q14",v:["持っている"]}},
+ {id:"q14d",t:"希望のドメイン名を教えてください",c:"希望ドメイン",hint:"第一希望がすでに使われている場合は、第二・第三希望で取得します。英数字とハイフンが使えます",type:"multi",req:true,reqFirst:true,ph:["第一希望（必須）例：〇〇.com","第二希望（任意）","第三希望（任意）"],col:["希望ドメイン（第一）","希望ドメイン（第二）","希望ドメイン（第三）"],when:{id:"q14",v:["持っていない（取得してほしい）"]}},
  {id:"q15",t:"今、ホームページはありますか？",c:"今のHP",type:"radio",o:["ある","ない"],other:"あればURLを入力"},
  {id:"q16",t:"「こんな感じがいい」と思うサイトはありますか？",c:"参考サイト",hint:"同業他社や好きなお店のサイトなど。URLやお店の名前だけでも大丈夫です",type:"textarea",ph:"例：〇〇さんのホームページの、写真が大きい感じが好き"},
  {id:"q17a",t:"公開後の文章や写真の修正・更新は、どうしたいですか？",c:"更新の担当",hint:"おまかせの場合、月額管理費に軽微な修正 月2回（合計30分以内）が含まれます",type:"radio",o:["自分たちで修正・更新したい","おまかせしたい","簡単なものは自分たちで、それ以外はおまかせ","まだ決めていない"]},
@@ -155,6 +159,10 @@ f.innerHTML=Q.map((q,i)=>{
   h+=q.hint?`<p class="hint">${esc(q.hint)}</p>`:`<p class="hint" style="margin:0 0 8px"></p>`;
   if(q.type==="text2"){
     h+=`<div class="stack"><input type="text" id="${q.id}-a" name="${q.id}-a" placeholder="${esc(q.ph[0])}"><input type="text" id="${q.id}-b" name="${q.id}-b" placeholder="${esc(q.ph[1])}"></div>`;
+  }else if(q.type==="text"){
+    h+=`<input type="text" id="${q.id}" name="${q.id}" placeholder="${esc(q.ph||"")}" autocapitalize="off" autocorrect="off">`;
+  }else if(q.type==="multi"){
+    h+=`<div class="stack">`+q.ph.map((ph,j)=>`<input type="text" id="${q.id}-${j}" name="${q.id}-${j}" placeholder="${esc(ph)}" autocapitalize="off" autocorrect="off">`).join("")+`</div>`;
   }else if(q.type==="textarea"){
     h+=`<textarea id="${q.id}" name="${q.id}" placeholder="${esc(q.ph||"")}"></textarea>`;
   }else{
@@ -175,7 +183,8 @@ const shown=q=>!q.when||[...f.querySelectorAll(`input[name="${q.when.id}"]:check
 const val=q=>{
   if(!shown(q))return "";
   if(q.type==="text2"){const a=f[q.id+"-a"].value.trim(),b=f[q.id+"-b"].value.trim();return (q.reqFirst&&!a)?"":[a,b].filter(Boolean).join(" / ")}
-  if(q.type==="textarea")return f[q.id].value.trim();
+  if(q.type==="textarea"||q.type==="text")return f[q.id].value.trim();
+  if(q.type==="multi"){const v=q.ph.map((_,j)=>f[q.id+"-"+j].value.trim());return (q.reqFirst&&!v[0])?"":v.filter(Boolean).join(" / ")}
   const v=[...f.querySelectorAll(`input[name="${q.id}"]:checked`)].map(x=>x.value);
   const o=f[q.id+"-o"]?.value.trim();
   if(o){const k=v.indexOf("その他");if(k>=0)v[k]="その他（"+o+"）";else v.push(o)}
@@ -247,7 +256,11 @@ f.addEventListener("submit",async e=>{
     }
     btn.textContent="送信しています…";
     const fields=[];
-    Q.forEach(q=>{if(q.type==="text2")fields.push([q.col[0],f[q.id+"-a"].value.trim()],[q.col[1],f[q.id+"-b"].value.trim()]);else fields.push([q.c,val(q)])});
+    Q.forEach(q=>{
+      if(q.type==="text2")fields.push([q.col[0],f[q.id+"-a"].value.trim()],[q.col[1],f[q.id+"-b"].value.trim()]);
+      else if(q.type==="multi")q.col.forEach((c,j)=>fields.push([c,shown(q)?f[q.id+"-"+j].value.trim():""]));
+      else fields.push([q.c,val(q)]);
+    });
     await run("submitAnswer",{fields,folderKey});
     try{localStorage.removeItem(KEY)}catch(_){}
     f.hidden=true;document.querySelector(".progress").hidden=true;document.querySelector("header").hidden=true;
