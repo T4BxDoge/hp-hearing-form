@@ -34,6 +34,12 @@
 9. **ファビコン**：ヒアリングで「ロゴ：あり（データもある）」かつロゴ画像を受け取った場合のみ、`images/` にファビコンを作って設定する。ロゴがなければ付けない
 10. **公開前の自動チェック**：push する前に Playwright でスマホ（390px）・タブレット（768px）・PC（1280px）を表示し、横スクロールがないか、コンソールエラーがないか、ページ内リンク（`#〜`）の飛び先があるかを確かめ、スマホとPCのスクリーンショットを1枚ずつ見る。問題があれば直してから push する
 
+### 本番公開（独自ドメイン）
+
+- 本番はCloudflare（RE.senseのアカウント）の Workers で公開する。サイトごとに `sites/<slug>/wrangler.jsonc`（`name` はCloudflareのプロジェクト名と同じ、`assets.directory` は `./`）と、設定ファイルを公開しないための `.assetsignore` を置く。Cloudflare側はルートディレクトリ（パス）を `/sites/<slug>`、ビルドコマンドは空、デプロイコマンドは `npx wrangler deploy`
+- ドメインが決まったら、canonical・og:url・og:image・`SITE.url` を本番ドメインに書き換える
+- `sitemap.xml` と `robots.txt`（Sitemap の行を含む）を置き、Google Search Console に登録する
+
 ### 公開
 
 - 作ったら `sites/index.html` の一覧に上から追加する
