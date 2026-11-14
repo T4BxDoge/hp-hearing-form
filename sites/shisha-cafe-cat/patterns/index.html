@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>デザイン案 5パターン｜SHISHA cafe CAT</title>
+<style>
+:root{--bg:#f4f4f2;--ink:#1f2023;--muted:#5d6066;--line:#e0e0dd;--card:#fff;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Sans","Noto Sans JP",sans-serif;font-size:16px;line-height:1.8}
+main{max-width:1100px;margin:0 auto;padding:40px max(16px,env(safe-area-inset-left,0px)) 64px max(16px,env(safe-area-inset-right,0px))}
+h1{margin:0 0 8px;font-size:clamp(24px,4vw,34px);line-height:1.4}
+.intro{color:var(--muted);margin:0 0 32px}
+.intro b{color:var(--ink)}
+.list{display:grid;gap:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:16px}
+.card-hd{display:flex;gap:14px;align-items:flex-start}
+.no{flex:none;width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px}
+.card h2{margin:0;font-size:22px;line-height:1.4}
+.card-hd p{margin:4px 0 0;color:var(--muted)}
+.shots{display:grid;grid-template-columns:3.2fr 1fr;gap:12px;align-items:start;text-decoration:none}
+.shots img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px;transition:transform .3s}
+.shots:hover img{transform:translateY(-3px)}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border:1px solid var(--ink);border-radius:8px;text-decoration:none;color:var(--ink)}
+.links .open{background:var(--ink);color:#fff;font-weight:700}
+@media (min-width:900px){.list{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>SHISHA cafe CAT　デザイン案（5パターン）</h1>
+<p class="intro">ヒアリングの回答をもとに、雰囲気の違う5つのデザインを作りました。どれも<b>トップ・メニュー・料金表・採用情報の4ページ</b>構成で、スマホにも対応しています。画像を押すと、そのパターンが開きます。メニュー・料金・営業時間・住所・電話番号・スタッフ・猫の名前は仮の内容です。</p>
+<div class="list"><article class="card">
+  <div class="card-hd"><span class="no">1</span><div><h2>王道</h2><p>白とグレーで清潔感のある、いちばんオーソドックスな構成。トップは猫とシーシャのイラストに煙がゆらぐ演出</p></div></div>
+  <a class="shots" href="1/" aria-label="パターン1「王道」を開く">
+    <img class="pc" src="thumbs/1-pc.jpg" alt="パターン1のPC表示" width="800" height="500" loading="lazy">
+    <img class="sp" src="thumbs/1-sp.jpg" alt="パターン1のスマホ表示" width="390" height="780" loading="lazy">
+  </a>
+  <div class="links"><a class="open" href="1/">パターン1を開く</a><a href="1/menu.html">メニュー</a><a href="1/price.html">料金表</a><a href="1/recruit.html">採用情報</a></div>
+</article><article class="card">
+  <div class="card-hd"><span class="no">2</span><div><h2>ミニマル</h2><p>余白と明朝体の文字が主役。線と細い煙だけで見せる、静かで上品な構成</p></div></div>
+  <a class="shots" href="2/" aria-label="パターン2「ミニマル」を開く">
+    <img class="pc" src="thumbs/2-pc.jpg" alt="パターン2のPC表示" width="800" height="500" loading="lazy">
+    <img class="sp" src="thumbs/2-sp.jpg" alt="パターン2のスマホ表示" width="390" height="780" loading="lazy">
+  </a>
+  <div class="links"><a class="open" href="2/">パターン2を開く</a><a href="2/menu.html">メニュー</a><a href="2/price.html">料金表</a><a href="2/recruit.html">採用情報</a></div>
+</article><article class="card">
+  <div class="card-hd"><span class="no">3</span><div><h2>ビジュアル</h2><p>黒の大きなトップに、煙の粒と歩く猫たちが動く大胆な構成。文字も大きく、印象に残す見せ方</p></div></div>
+  <a class="shots" href="3/" aria-label="パターン3「ビジュアル」を開く">
+    <img class="pc" src="thumbs/3-pc.jpg" alt="パターン3のPC表示" width="800" height="500" loading="lazy">
+    <img class="sp" src="thumbs/3-sp.jpg" alt="パターン3のスマホ表示" width="390" height="780" loading="lazy">
+  </a>
+  <div class="links"><a class="open" href="3/">パターン3を開く</a><a href="3/menu.html">メニュー</a><a href="3/price.html">料金表</a><a href="3/recruit.html">採用情報</a></div>
+</article><article class="card">
+  <div class="card-hd"><span class="no">4</span><div><h2>やわらか</h2><p>丸みのある書体とカードで、親しみやすくやさしい雰囲気。足あとや煙の輪がふわっと浮かぶ構成</p></div></div>
+  <a class="shots" href="4/" aria-label="パターン4「やわらか」を開く">
+    <img class="pc" src="thumbs/4-pc.jpg" alt="パターン4のPC表示" width="800" height="500" loading="lazy">
+    <img class="sp" src="thumbs/4-sp.jpg" alt="パターン4のスマホ表示" width="390" height="780" loading="lazy">
+  </a>
+  <div class="links"><a class="open" href="4/">パターン4を開く</a><a href="4/menu.html">メニュー</a><a href="4/price.html">料金表</a><a href="4/recruit.html">採用情報</a></div>
+</article><article class="card">
+  <div class="card-hd"><span class="no">5</span><div><h2>個性派</h2><p>カフェの黒板メニューがモチーフ。チョーク風の手書き文字と、煙の輪・揺れるしっぽで遊び心を出した構成</p></div></div>
+  <a class="shots" href="5/" aria-label="パターン5「個性派」を開く">
+    <img class="pc" src="thumbs/5-pc.jpg" alt="パターン5のPC表示" width="800" height="500" loading="lazy">
+    <img class="sp" src="thumbs/5-sp.jpg" alt="パターン5のスマホ表示" width="390" height="780" loading="lazy">
+  </a>
+  <div class="links"><a class="open" href="5/">パターン5を開く</a><a href="5/menu.html">メニュー</a><a href="5/price.html">料金表</a><a href="5/recruit.html">採用情報</a></div>
+</article></div>
+</main>
+</body>
+</html>
