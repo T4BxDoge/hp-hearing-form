@@ -40,7 +40,7 @@
 ### 必須条件（毎回すべて満たす）
 
 1. **レスポンシブ**：スマホ優先で作り、スマホ（390px）・タブレット（768px）・PC（1280px）で崩れないこと。横スクロールが出ない、文字は16px以上、タップできる部分は44px以上
-2. **OGP**：`og:title` / `og:description` / `og:image` / `og:url` / `twitter:card` を `<head>` に直接書く（LINEなどはJSを実行しないため）。`og:image` は 1200×630 の `images/ogp.png` を作り、絶対URL（`https://t4bxdoge.github.io/hp-hearing-form/sites/<slug>/images/ogp.png`）で指定する
+2. **OGP**：`og:title` / `og:description` / `og:image` / `og:url` / `twitter:card` を `<head>` に直接書く（LINEなどはJSを実行しないため）。`og:image` は 1200×630 の `images/ogp.png` をパターンごとに作り、絶対URL（デモ中は `https://t4bxdoge.github.io/hp-hearing-form/sites/<slug>/patterns/<番号>/images/ogp.png`、本番用は本番ドメイン）で指定する
 3. **検索対策**：`<title>` と `meta description` は「地域名＋業種＋店名」を含める（地域が不明なら業種＋店名）。見出しは h1 を1つ、以下 h2・h3 の順。画像には `alt`。構造化データ（JSON-LD の LocalBusiness 系の型）で店名・住所・電話・営業時間・URLを入れる
 4. **スマホでワンタップ**：電話番号は `tel:` リンク、住所は Googleマップ（`https://www.google.com/maps/search/?api=1&query=住所`）へのリンク、LINE・Instagram などはそれぞれのURLへのリンクにする
    - LINEの友だち追加は、スマホはボタン、PCはQRコード（PCでURLを開くとQRの画面になるため）。QR画像はLINE公式アカウントの管理画面からダウンロードしたものを `images/line-qr.png` に置き、PCではLINEボタンを押すとページ内のQRコード欄へ移動させる
