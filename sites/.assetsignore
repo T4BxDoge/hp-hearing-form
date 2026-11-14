@@ -1,0 +1,9 @@
+# デモ用URLでは公開しないもの
+# 一覧ページ（ほかのお客さんの名前が並ぶため）
+/index.html
+# 本番公開済み・古いテスト
+/re-sense/
+/test/
+# 設定ファイル
+wrangler.jsonc
+.assetsignore

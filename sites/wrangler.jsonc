@@ -1,0 +1,9 @@
+// デザインデモ公開用（Cloudflare Workers の「demo」プロジェクト）
+// sites フォルダのうち、デモだけを公開する。除外するものは .assetsignore に書く
+{
+  "name": "demo",
+  "compatibility_date": "2025-11-01",
+  "assets": {
+    "directory": "./"
+  }
+}
