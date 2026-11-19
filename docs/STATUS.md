@@ -1,12 +1,14 @@
 # 現在の状況（作業のたびに更新する）
 
-最終更新：2026-11-19（claude.ai のチャットから Claude Code へ移行）
+最終更新：2026-11-19（RE.sense にリジェコミュニティ・DFS Collective のページを追加）
 
 ## 案件ごとの状況
 
 ### 株式会社RE.sense — 本番公開済み
 - 本番URL：https://resense-inc.com （www付きも可）
-- ファイル：`sites/re-sense/`（1ページ完結、問い合わせはLINEのみ）
+- ファイル：`sites/re-sense/`（トップ＋サービス紹介2ページ＋規約4ページ、問い合わせはLINEとメール）
+  - トップ `index.html`／リジェコミュニティ `reje/`／DFS Collective `dfs/`／規約 `legal/`（特商法・利用規約・プライバシー・紹介制度規約）
+  - 会社情報・決済リンクは `site.js` の `SITE` にまとめている（全ページ共通）
 - 公開：Cloudflare Workers の `resense` プロジェクト（ルート `/sites/re-sense`）
 - ドメイン：resense-inc.com（Cloudflare Registrar、RE.sense会社名義、自動更新オン）
 - Google Search Console：登録済み（DNSのTXTレコードは消さない）、サイトマップ送信済み
@@ -15,6 +17,12 @@
   - [ ] PC用のLINE友だち追加QR画像（`sites/re-sense/images/line-qr.png`）。LINE公式アカウントの管理画面からダウンロードしたものを受け取ったら置くだけで、PCではQRが出るようになる
   - [ ] サービスの説明文は制作時の仮の文章のまま（先方の確認待ち）
   - [ ] Googleアナリティクスは未設定（`SITE.gaId` に測定IDを入れれば動く）
+  - [ ] **Stripe の決済リンク待ち**：Stripe（RE.sense名義）で3つの商品（リジェ一般 月2,200円／リジェ チャンネル作成 月4,400円／DFS 月2,999円）の Payment Link を作ってもらい、URLを `site.js` の `SITE.stripe` に入れる。それまで入会ボタンは「お申し込み準備中」。カスタマーポータルのURLは `SITE.stripePortal` へ
+  - [ ] **メール info@resense-inc.com**：Cloudflare の Email Routing の設定待ち（ユーザー作業）。サイトにはもう表示している
+  - [ ] 特商法の表記：代表者名・住所・電話は「請求があれば開示」の表記。Stripe の審査で求められたら `SITE.representative`／`address`／`tel` に入れる
+  - [ ] DFS START（無料公式LINE）のURL待ち → `SITE.dfsLineUrl`。空の間はボタンを出さない
+  - [ ] 画像は先方の画像から切り出したもの（少し粗い）。元のキャラクター画像・ロゴ・写真のデータがもらえたら差し替える
+  - [ ] サービスカードの名前：いただいた画像では「DFS college」と「DFS Collective」の2種類あり、「DFS Collective」で統一した（先方に確認）
 
 ### SHISHA cafe CAT — テスト用の案件（5パターンのデモ作成済み）
 - 比較ページ（今の確認用URL）：https://t4bxdoge.github.io/hp-hearing-form/sites/shisha-cafe-cat/patterns/
