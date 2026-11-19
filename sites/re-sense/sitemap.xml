@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://resense-inc.com/</loc>
-    <lastmod>2026-11-12</lastmod>
-  </url>
+  <url><loc>https://resense-inc.com/</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://resense-inc.com/reje/</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://resense-inc.com/dfs/</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://resense-inc.com/legal/tokushoho.html</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://resense-inc.com/legal/terms.html</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://resense-inc.com/legal/privacy.html</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://resense-inc.com/legal/referral.html</loc><lastmod>2026-11-19</lastmod></url>
 </urlset>
