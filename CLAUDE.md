@@ -5,6 +5,14 @@
 
 **返信は必ず日本語で書く（必須）。英語で返さない。** 説明・報告・質問・エラーの伝え方もすべて日本語。
 
+## 最初に読むもの・作業の進め方（Claude Code）
+
+- 作業を始める前に `docs/STATUS.md`（今の状況と残っていること）を読む。経緯や判断の理由は `docs/HISTORY.md`、ユーザーにお願いする作業の手順は `docs/OPERATIONS.md`
+- ユーザーはこのリポジトリで指示を出し、Claude が**最後まで自動で終わらせる**ことを望んでいる。確認のために止まらず、作る → チェック → コミット → push まで進めて、結果（見るURL・変えたこと）を報告する。ユーザーにしかできない作業（Cloudflare・Google・GASの画面操作など）だけを、手順を付けてお願いする
+- push は main に直接。main に直接 push できない環境のときは、作業ブランチに push して Pull Request を作り、`gh pr merge --squash` でマージまで行う（マージできなければ、GitHubの画面での「Merge」の押し方をユーザーに伝える）
+- 公開前のチェックは `python3 tools/check_site.py sites/<slug> --shots <保存先>`（Playwright を使う。入っていなければ `pip install playwright && python3 -m playwright install chromium`）
+- 作業が終わったら `docs/STATUS.md` を更新する（案件の状況・残っていること）。新しく決めたことは `docs/HISTORY.md` にも追記する
+
 ## ヒアリング回答からホームページを作るとき
 
 ユーザーがスプシA列の「以下はホームページ制作のヒアリング回答です…」で始まる文章を貼ったら、次のルールで作る。
