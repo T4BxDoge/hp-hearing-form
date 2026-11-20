@@ -257,3 +257,16 @@ p{margin:0}
 .mail-row{color:var(--muted)}
 .mail-link{display:inline-flex;align-items:center;min-height:44px;color:var(--ink)}
 .ft-legal{width:100%}
+/* cero のカード（2枚の下に横長で） */
+@media (min-width:900px){.fcard-cero{grid-column:1/-1;grid-template-columns:auto 1fr auto;align-items:center;column-gap:32px}.fcard-cero>*{grid-column:2}.fcard-cero .fcard-head{grid-column:1;grid-row:1/5}.fcard-cero .btn{grid-column:3;grid-row:1/5;align-self:center}}
+.fcard-cero{background:linear-gradient(135deg,#0b1230 0%,#162264 60%,#0b1230 100%);color:#fff;border:1px solid #c9a650}
+.fcard-cero::before{background:#4f7cff;opacity:.35}
+.fcard-cero .fcard-en{color:#e8c46a}
+.fcard-cero>p:not(.fcard-sub){color:#d6dbef}
+.fcard-cero .fcard-price li{background:rgba(255,255,255,.06);border:1px solid rgba(232,196,106,.55)}
+.fcard-cero .fcard-price b{color:#ffe9a8}
+.fcard-cero:hover{box-shadow:0 28px 56px -30px rgba(232,196,106,.55)}
+.fcard-cero-logo{flex:none;display:grid;place-items:center;width:64px;height:64px;border-radius:16px;background:#000;border:1px solid #555;font-family:"Quicksand","Helvetica Neue",sans-serif;font-size:22px;color:#fff;position:relative}
+.fcard-cero-logo::before{content:"";position:absolute;left:17px;top:19px;width:5px;height:5px;border-radius:50%;background:#d6ff3a;box-shadow:0 0 6px #d6ff3a}
+.btn-cero{background:linear-gradient(180deg,#fff0b8,#e8c46a 60%,#b88a2e);color:#3a2600;font-weight:700}
+.btn-cero::before{background:#ffe9a8}
