@@ -17,9 +17,8 @@
   - [ ] PC用のLINE友だち追加QR画像（`sites/re-sense/images/line-qr.png`）。LINE公式アカウントの管理画面からダウンロードしたものを受け取ったら置くだけで、PCではQRが出るようになる
   - [ ] サービスの説明文は制作時の仮の文章のまま（先方の確認待ち）
   - [ ] Googleアナリティクスは未設定（`SITE.gaId` に測定IDを入れれば動く）
-  - [ ] **Stripe の決済リンク待ち**：Stripe（RE.sense名義）で3つの商品（リジェ一般 月2,200円／リジェ チャンネル作成 月4,400円／DFS 月2,999円）の Payment Link を作ってもらい、URLを `site.js` の `SITE.stripe` に入れる。それまで入会ボタンは「お申し込み準備中」。カスタマーポータルのURLは `SITE.stripePortal` へ
-  - [ ] **cero のリンク待ち**：App Store・Google Play のURL、「今すぐはじめる」の行き先、代理店制度の詳細ページのURL → `site.js` の `SITE.cero`。空の間はストアのボタンが「準備中」、代理店ボタンは RE.sense の公式LINEへ
-  - [ ] cero の提供会社名（RE.sense が正規代理店かどうか）を確認したら、cero のページのフッターに書く
+  - [ ] **Stripe の決済リンク待ち（ユーザー判断で後回し）**：Stripe（RE.sense名義）で3つの商品（リジェ一般 月2,200円／リジェ チャンネル作成 月4,400円／DFS 月2,999円）の Payment Link を作ってもらい、URLを `site.js` の `SITE.stripe` に入れる。それまで入会ボタンは「お申し込み準備中」。カスタマーポータルのURLは `SITE.stripePortal` へ
+  - [ ] **cero の App Store のURL待ち** → `site.js` の `SITE.cero.appStore`（空の間は「準備中」）。Google Play は設定済み。「今すぐはじめる」の行き先（`startUrl`）・代理店ページ（`agentUrl`）も未設定（空ならダウンロード欄／公式LINEへ）
   - [x] メール info@resense-inc.com（受信テスト済み。最初は迷惑メールに入ったので、Gmailで「迷惑メールではない」とフィルタを設定）：Cloudflare の Email Routing で会社のGmail（遠藤さん管理）へ転送する設定済み（2026-11-20）。受信のみ。info@ から返信したくなったら Gmail の「他のアドレスからメールを送信」か Google Workspace
   - [ ] 特商法の表記：代表者名・住所・電話は「請求があれば開示」の表記。Stripe の審査で求められたら `SITE.representative`／`address`／`tel` に入れる
   - [ ] DFS START（無料公式LINE）のURL待ち → `SITE.dfsLineUrl`。空の間はボタンを出さない
