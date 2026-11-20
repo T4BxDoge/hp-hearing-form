@@ -53,6 +53,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
   const box = document.getElementById("join");
   if (!box) return;
   const btn = box.querySelector(".join-btn");
+  if (!btn) return;
   const label = btn.querySelector(".join-label");
   const agree = box.querySelector(".agree input");
   const msg = box.querySelector(".join-msg");

@@ -28,8 +28,36 @@ const SITE = {
   // 会員さまが自分で解約・カード変更できるページ（Stripe のカスタマーポータルのURL）。空なら表示しない
   stripePortal: "",
   // DFS START（無料の公式LINE）の友だち追加URL。空ならボタンを出さない
-  dfsLineUrl: ""
+  dfsLineUrl: "",
+
+  // ---- cero（通信アプリ） ----
+  cero: {
+    appStore: "",     // App Store のURL（空なら「準備中」）
+    googlePlay: "",   // Google Play のURL（空なら「準備中」）
+    startUrl: "",     // 「今すぐceroをはじめる」の行き先（代理店経由の申し込みページなど）。空ならダウンロード欄へ移動
+    agentUrl: ""      // 代理店制度の詳細・登録ページのURL。空なら RE.sense の公式LINE（lineUrl）へ
+  }
 };
+
+/* ---------- cero のリンク（ceroのページのみ） ---------- */
+(function ceroLinks() {
+  const c = SITE.cero || {};
+  document.querySelectorAll("[data-cero]").forEach(el => {
+    const key = el.dataset.cero;
+    let url = c[key];
+    if (!url && key === "agentUrl") url = SITE.lineUrl;
+    if (url) {
+      el.href = url; el.target = "_blank"; el.rel = "noopener";
+    } else if (key === "startUrl") {
+      el.href = "#download";
+    } else {
+      el.classList.add("is-soon");
+      el.removeAttribute("href");
+      el.setAttribute("aria-disabled", "true");
+      const s = el.querySelector(".soon"); if (s) s.hidden = false;
+    }
+  });
+})();
 
 /* ---------- 情報の差し込み（全ページ共通） ---------- */
 (function applySite() {
