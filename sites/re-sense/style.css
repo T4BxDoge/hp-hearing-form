@@ -135,7 +135,7 @@ p{margin:0}
 
 /* サービス */
 .cards{display:grid;gap:20px}
-@media (min-width:768px){.cards{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:768px){.cards{grid-template-columns:repeat(2,1fr)}}
 .card{position:relative;background:var(--bg);padding:36px 28px 32px;display:grid;gap:12px;align-content:start;border:1px solid var(--line);transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s}
 .card::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;transition:transform .6s var(--ease)}
 .card:hover{transform:translateY(-6px);box-shadow:0 24px 48px -28px rgba(21,24,27,.28);border-color:transparent}

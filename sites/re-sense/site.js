@@ -6,7 +6,7 @@
 const SITE = {
   name: "株式会社RE.sense",
   url: "https://resense-inc.com/",
-  description: "オンラインコミュニティ（リジェコミュニティ・DFS Collective）の運営、ホームページ制作、テレアポ代行",
+  description: "オンラインコミュニティ（リジェコミュニティ・DFS Collective）の運営、通信アプリ「cero」の開発・提供、ホームページ制作、テレアポ代行",
   // 営業時間を載せるときは、構造化データ用に曜日・開始・終了を入れる
   // 例：[{ days: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "10:00", closes: "19:00" }]
   openingHours: [],
@@ -33,7 +33,7 @@ const SITE = {
   // ---- cero（通信アプリ） ----
   cero: {
     appStore: "",     // App Store のURL（空なら「準備中」）
-    googlePlay: "",   // Google Play のURL（空なら「準備中」）
+    googlePlay: "https://play.google.com/store/apps/details?id=jp.co.gc.cero", // Google Play のURL（空なら「準備中」）
     startUrl: "",     // 「今すぐceroをはじめる」の行き先（代理店経由の申し込みページなど）。空ならダウンロード欄へ移動
     agentUrl: ""      // 代理店制度の詳細・登録ページのURL。空なら RE.sense の公式LINE（lineUrl）へ
   }
