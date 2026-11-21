@@ -23,7 +23,7 @@
       const ir = img.getBoundingClientRect();
       return { x: ir.left - r.left + ir.width * fx, y: ir.top - r.top + ir.height * fy };
     };
-    a = pt(L, .78, .3); b = pt(Rr, .1, .33);
+    a = pt(L, .87, .42); b = pt(Rr, .08, .47);
   }
   function petal(p) {
     ctx.save();
