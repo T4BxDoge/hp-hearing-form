@@ -53,6 +53,16 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
   const box = document.getElementById("join");
   if (!box) return;
   const btn = box.querySelector(".join-btn");
+  // Stripe の料金表を使うページ（リジェ）：同意のチェックで料金表を表示する
+  const table = document.getElementById("ptable");
+  if (table) {
+    const ag = box.querySelector(".agree input"), m = box.querySelector(".join-msg");
+    const sync = () => {
+      table.hidden = !ag.checked;
+      m.textContent = ag.checked ? "プランを選んで、お申し込み（決済サービス Stripe）へお進みください" : "上の「同意する」にチェックを入れると、お申し込みの画面が表示されます";
+    };
+    ag.addEventListener("change", sync); sync();
+  }
   if (!btn) return;
   const label = btn.querySelector(".join-label");
   const agree = box.querySelector(".agree input");

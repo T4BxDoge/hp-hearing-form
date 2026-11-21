@@ -17,7 +17,7 @@
   - [ ] PC用のLINE友だち追加QR画像（`sites/re-sense/images/line-qr.png`）。LINE公式アカウントの管理画面からダウンロードしたものを受け取ったら置くだけで、PCではQRが出るようになる
   - [ ] サービスの説明文は制作時の仮の文章のまま（先方の確認待ち）
   - [ ] Googleアナリティクスは未設定（`SITE.gaId` に測定IDを入れれば動く）
-  - [ ] **Stripe の決済リンク待ち（ユーザー判断で後回し）**：Stripe（RE.sense名義）で3つの商品（リジェ一般 月2,200円／リジェ チャンネル作成 月4,400円／DFS 月2,999円）の Payment Link を作ってもらい、URLを `site.js` の `SITE.stripe` に入れる。それまで入会ボタンは「お申し込み準備中」。カスタマーポータルのURLは `SITE.stripePortal` へ
+  - [x] Stripe 設定済み（2026-11-21）：リジェは Stripe の料金表（`reje/index.html` の `<stripe-pricing-table>`、同意チェックで表示）、DFS は Payment Link（`site.js` の `SITE.stripe.dfs`）。カスタマーポータル（解約・カード変更）のURLは未設定 → `SITE.stripePortal`
   - [x] cero のリンク：App Store・Google Play・申し込み（`https://cero-llc.com/signup?dealer=A1`）を設定済み。代理店ページのURL（`SITE.cero.agentUrl`）は未設定（空なら公式LINEへ）
   - [x] メール info@resense-inc.com（受信テスト済み。最初は迷惑メールに入ったので、Gmailで「迷惑メールではない」とフィルタを設定）：Cloudflare の Email Routing で会社のGmail（遠藤さん管理）へ転送する設定済み（2026-11-20）。受信のみ。info@ から返信したくなったら Gmail の「他のアドレスからメールを送信」か Google Workspace
   - [ ] 特商法の表記：代表者名・住所・電話は「請求があれば開示」の表記。Stripe の審査で求められたら `SITE.representative`／`address`／`tel` に入れる
