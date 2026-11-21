@@ -18,12 +18,11 @@
   - [ ] サービスの説明文は制作時の仮の文章のまま（先方の確認待ち）
   - [ ] Googleアナリティクスは未設定（`SITE.gaId` に測定IDを入れれば動く）
   - [ ] **Stripe の決済リンク待ち（ユーザー判断で後回し）**：Stripe（RE.sense名義）で3つの商品（リジェ一般 月2,200円／リジェ チャンネル作成 月4,400円／DFS 月2,999円）の Payment Link を作ってもらい、URLを `site.js` の `SITE.stripe` に入れる。それまで入会ボタンは「お申し込み準備中」。カスタマーポータルのURLは `SITE.stripePortal` へ
-  - [ ] **cero の App Store のURL待ち** → `site.js` の `SITE.cero.appStore`（空の間は「準備中」）。Google Play は設定済み。「今すぐはじめる」の行き先（`startUrl`）・代理店ページ（`agentUrl`）も未設定（空ならダウンロード欄／公式LINEへ）
+  - [x] cero のリンク：App Store・Google Play・申し込み（`https://cero-llc.com/signup?dealer=A1`）を設定済み。代理店ページのURL（`SITE.cero.agentUrl`）は未設定（空なら公式LINEへ）
   - [x] メール info@resense-inc.com（受信テスト済み。最初は迷惑メールに入ったので、Gmailで「迷惑メールではない」とフィルタを設定）：Cloudflare の Email Routing で会社のGmail（遠藤さん管理）へ転送する設定済み（2026-11-20）。受信のみ。info@ から返信したくなったら Gmail の「他のアドレスからメールを送信」か Google Workspace
   - [ ] 特商法の表記：代表者名・住所・電話は「請求があれば開示」の表記。Stripe の審査で求められたら `SITE.representative`／`address`／`tel` に入れる
   - [ ] DFS START（無料公式LINE）のURL待ち → `SITE.dfsLineUrl`。空の間はボタンを出さない
   - [ ] 画像は先方の画像から切り出したもの（少し粗い）。元のキャラクター画像・ロゴ・写真のデータがもらえたら差し替える
-  - [ ] サービスカードの名前：いただいた画像では「DFS college」と「DFS Collective」の2種類あり、「DFS Collective」で統一した（先方に確認）
 
 ### SHISHA cafe CAT — テスト用の案件（5パターンのデモ作成済み）
 - 比較ページ（今の確認用URL）：https://t4bxdoge.github.io/hp-hearing-form/sites/shisha-cafe-cat/patterns/

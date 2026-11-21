@@ -221,3 +221,29 @@ ul{margin:0;padding:0;list-style:none}
 @media (max-width:899px){
   .badges li{aspect-ratio:auto;max-width:none;border-radius:18px;padding:16px 10px;min-height:150px}
 }
+
+/* ===== 2026-11-21 修正 ===== */
+/* ロゴは画像（images/cero-logo.png）で表示 */
+.logo-img{display:inline-block;height:1em;width:auto;vertical-align:-.12em}
+.brand .logo-img{height:34px}
+.hero-logo .logo-img{height:clamp(52px,8vw,78px);filter:drop-shadow(0 0 14px rgba(255,255,255,.25))}
+.plate{display:inline-flex;align-items:center;gap:.2em}
+.plate .logo-img{height:1.05em}
+.phone .logo-img{height:20px}
+.agent-head h2 .logo-img{height:.95em}
+.hd-btns a{min-height:48px;padding:0 22px;font-size:17px}
+/* ヒーロー：見出しを真ん中に、人物を大きく */
+.hero-p{top:10px;width:clamp(120px,22vw,320px)}
+.hero-in{padding-inline:0}
+@media (min-width:768px){.hero-in{padding-top:64px;padding-inline:0}}
+.hero-title{font-size:clamp(28px,5.6vw,64px)}
+.hero-title .ln>span{white-space:nowrap}
+@media (min-width:768px) and (max-width:1099px){.hero-title{font-size:clamp(28px,4.4vw,48px)}}
+/* ストアのボタン（公式バッジ風） */
+.stores{gap:16px}
+.store{min-height:68px;min-width:220px;padding:8px 22px 8px 18px;border-radius:12px;border:1.5px solid #a6a6a6;gap:12px}
+.store svg{width:34px;height:34px}
+.store .store-gp{width:32px;height:32px}
+.store span{font-size:26px;font-weight:600;letter-spacing:-.01em;font-family:-apple-system,"Helvetica Neue",Arial,sans-serif}
+.store span small{font-size:16px;font-weight:500;letter-spacing:.01em}
+@media (max-width:767px){.hd-btns{gap:6px}.hd-btns a{min-height:44px;padding:0 12px;font-size:16px}.brand .logo-img{height:28px}}

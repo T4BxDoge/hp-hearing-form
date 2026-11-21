@@ -42,23 +42,55 @@
     const t = (now - start) / 1000, dt = Math.min(.05, (now - last) / 1000); last = now;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
-    // 赤い糸
+    // 赤い糸：2人の糸電話の缶から上に弧を描き、真ん中（見出しの上）で蝶結びになる
     if (a && b && W > 0) {
-      const grow = still ? 1 : Math.min(1, Math.max(0, (t - .6) / 1.4));
+      const grow = still ? 1 : Math.min(1, Math.max(0, (t - .5) / 1.6));
       const ease = 1 - Math.pow(1 - grow, 3);
-      const sag = 26 + Math.sin(t * 1.2) * 4;
-      const cx = (a.x + b.x) / 2, cy = Math.max(a.y, b.y) + sag;
+      const apexY = Math.max(16, Math.min(a.y, b.y) * .25) + (still ? 0 : Math.sin(t * 1.1) * 2);
+      const cx = (a.x + b.x) / 2, cy = 2 * apexY - (a.y + b.y) / 2;
       const q = u => ({ x: (1 - u) * (1 - u) * a.x + 2 * (1 - u) * u * cx + u * u * b.x, y: (1 - u) * (1 - u) * a.y + 2 * (1 - u) * u * cy + u * u * b.y });
-      ctx.beginPath();
-      for (let k = 0; k <= 60 * ease; k++) { const p = q(k / 60); k ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); }
-      ctx.strokeStyle = "rgba(255,70,70,.85)"; ctx.lineWidth = 1.6; ctx.shadowColor = "#ff3b3b"; ctx.shadowBlur = 10; ctx.stroke();
+      ctx.lineCap = "round"; ctx.lineJoin = "round";
+      ctx.strokeStyle = "rgba(255,70,70,.95)"; ctx.shadowColor = "#ff2d2d"; ctx.shadowBlur = 12; ctx.lineWidth = 2;
+      // 両側の缶から真ん中に向かって伸びる
+      [[0, .5], [1, .5]].forEach(([from, to]) => {
+        ctx.beginPath();
+        for (let k = 0; k <= 40; k++) {
+          const u = from + (to - from) * ease * (k / 40);
+          const p = q(u);
+          k ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y);
+        }
+        ctx.stroke();
+      });
+      // 真ん中の蝶結び
+      if (grow >= 1) {
+        const m = q(.5), sz = Math.max(14, Math.min(28, W * .02));
+        const pop = still ? 1 : Math.min(1, (t - 2.1) / .5);
+        if (pop > 0) {
+          const k = 1 - Math.pow(1 - pop, 3);
+          ctx.save(); ctx.translate(m.x, m.y); ctx.scale(k, k);
+          ctx.lineWidth = 2.2;
+          [-1, 1].forEach(sg => {
+            ctx.beginPath();  // 輪
+            ctx.moveTo(0, 0);
+            ctx.bezierCurveTo(sg * sz * .6, -sz * .9, sg * sz * 1.5, -sz * .5, sg * sz * 1.2, 0);
+            ctx.bezierCurveTo(sg * sz * 1.0, sz * .35, sg * sz * .5, sz * .2, 0, 0);
+            ctx.stroke();
+            ctx.beginPath();  // たれ
+            ctx.moveTo(0, 0);
+            ctx.quadraticCurveTo(sg * sz * .35, sz * .6, sg * sz * .75, sz * 1.05);
+            ctx.stroke();
+          });
+          ctx.beginPath(); ctx.arc(0, 0, 2.6, 0, 6.29); ctx.fillStyle = "#ff5a5a"; ctx.fill();
+          ctx.restore();
+        }
+      }
       ctx.shadowBlur = 0;
       // 糸の上を行き来する光（会話）
       if (!still && grow >= 1) {
         const u = (Math.sin(t * .9) + 1) / 2, p = q(u);
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 14);
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 12);
         g.addColorStop(0, "rgba(255,230,160,1)"); g.addColorStop(1, "rgba(255,120,80,0)");
-        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, 14, 0, 6.29); ctx.fill();
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, 12, 0, 6.29); ctx.fill();
       }
     }
     // 桜

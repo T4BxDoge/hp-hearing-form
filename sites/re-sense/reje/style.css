@@ -214,3 +214,10 @@ ul{margin:0;padding:0;list-style:none}
 .ref-only{max-width:880px;margin:0 auto 24px;display:flex;gap:12px;align-items:flex-start;padding:14px 20px;border-radius:14px;background:#fff8d6;border:2px solid var(--yellow);font-weight:500}
 .ref-only b{color:var(--navy);background:linear-gradient(transparent 60%,rgba(255,216,61,.6) 60%)}
 .ref-only .crown{width:26px;height:26px;margin-top:2px}
+
+/* ヘッダーの「今すぐ参加」（黄色・矢印付き） */
+.hd-join{gap:8px;background:var(--yellow);color:var(--navy);font-weight:900;padding:0 22px;min-height:48px;box-shadow:0 8px 20px -10px rgba(255,190,0,.9)}
+.hd-join:hover{background:#ffe266;color:var(--navy)}
+@media (min-width:768px){.hd-join{font-size:18px;min-height:52px;padding:0 28px}}
+.brand b{white-space:nowrap}
+@media (max-width:420px){.hd-join{padding:0 16px;font-size:16px}.hd-join .arr{display:none}.brand img{width:34px}.brand b{font-size:17px}}
