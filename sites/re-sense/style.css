@@ -341,3 +341,4 @@ p{margin:0}
 .webcard-pic{width:100%;height:auto;max-width:560px;justify-self:center;transition:transform .8s var(--ease)}
 .webcard:hover .webcard-pic{transform:translateY(-6px) scale(1.02)}
 @media (max-width:899px){.webcard-pic{order:-1;max-width:420px}}
+.webcard-pic{filter:drop-shadow(0 20px 20px rgba(20,70,80,.18))}
