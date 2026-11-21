@@ -221,3 +221,5 @@ ul{margin:0;padding:0;list-style:none}
 @media (min-width:768px){.hd-join{font-size:18px;min-height:52px;padding:0 28px}}
 .brand b{white-space:nowrap}
 @media (max-width:420px){.hd-join{padding:0 16px;font-size:16px}.hd-join .arr{display:none}.brand img{width:34px}.brand b{font-size:17px}}
+.pcard{cursor:default}
+.ptable{width:100%;min-height:200px;padding:8px 0;animation:fadeUp .6s var(--ease) both}

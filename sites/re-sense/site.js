@@ -21,9 +21,10 @@ const SITE = {
 
   // ---- 入会（Stripe の Payment Link の URL を入れる。空なら「準備中」になる） ----
   stripe: {
-    rejeGeneral: "",  // リジェコミュニティ 一般プラン（月額2,200円）例："https://buy.stripe.com/xxxx"
+    // リジェコミュニティは Stripe の料金表（reje/index.html の <stripe-pricing-table>）で申し込むため、ここは使っていない
+    rejeGeneral: "",
     rejeChannel: "",  // リジェコミュニティ チャンネル作成プラン（月額4,400円）
-    dfs: ""           // DFS Collective 月額会員プラン（月額2,999円）
+    dfs: "https://buy.stripe.com/3cIfZh9czb9va6c1La7Re00" // DFS Collective 月額会員プラン（月額2,999円）
   },
   // 会員さまが自分で解約・カード変更できるページ（Stripe のカスタマーポータルのURL）。空なら表示しない
   stripePortal: "",

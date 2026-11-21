@@ -21,6 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&family=Montserrat:ital,wght@1,700&display=swap">
 <link rel="stylesheet" href="style.css">
+<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Product","name":"リジェコミュニティ","description":"学び・人とのつながり・ビジネスチャンスを広げるオンラインコミュニティ","brand":{"@type":"Organization","name":"株式会社RE.sense","url":"https://resense-inc.com/"},"image":"https://resense-inc.com/reje/images/ogp.png","offers":[{"@type":"Offer","name":"一般プラン（月額）","price":"2200","priceCurrency":"JPY","url":"https://resense-inc.com/reje/"},{"@type":"Offer","name":"チャンネル作成プラン（月額）","price":"4400","priceCurrency":"JPY","url":"https://resense-inc.com/reje/"}]}
 </script>
@@ -118,15 +119,15 @@
         <p class="en">Plan</p>
         <h2 id="plan-title">料金プラン</h2>
       </div>
-      <p class="plan-hint reveal">プランを選んで、下のボタンから入会手続きへお進みください。</p>
-      <div class="plans" role="radiogroup" aria-label="プランを選ぶ">
-        <div class="pcard reveal" role="radio" tabindex="0" aria-checked="true" data-plan="rejeGeneral" data-plan-name="一般プラン">
-          <p class="pcard-name"><span class="radio" aria-hidden="true"></span>一般プラン</p>
+      <p class="plan-hint reveal">下の「同意する」にチェックを入れると、お申し込みの画面が表示されます。</p>
+      <div class="plans">
+        <div class="pcard reveal">
+          <p class="pcard-name">一般プラン</p>
           <p class="pcard-price">月額 <b>2,200</b>円<small>（税込）</small></p>
           <ul><li>コミュニティへの参加</li><li>勉強会・イベントへの参加</li><li>限定情報の受け取り</li></ul>
         </div>
-        <div class="pcard pcard-pro reveal" role="radio" tabindex="-1" aria-checked="false" data-plan="rejeChannel" data-plan-name="チャンネル作成プラン">
-          <p class="pcard-name"><span class="radio" aria-hidden="true"></span><svg class="crown" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18L2 7l6 5 4-7 4 7 6-5-1 11z"/></svg>チャンネル作成プラン</p>
+        <div class="pcard pcard-pro reveal">
+          <p class="pcard-name"><svg class="crown" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18L2 7l6 5 4-7 4 7 6-5-1 11z"/></svg>チャンネル作成プラン</p>
           <p class="pcard-price">月額 <b>4,400</b>円<small>（税込）</small></p>
           <ul><li>一般プランのすべての内容</li><li>専用チャンネルの作成・運営</li><li>コミュニティ内での発信・集客</li></ul>
         </div>
@@ -134,7 +135,9 @@
       <div class="join reveal">
         <p class="agree-links">お申し込みの前に<a href="../legal/terms.html" target="_blank">利用規約</a>と<a href="../legal/tokushoho.html" target="_blank">特定商取引法に基づく表記</a>（解約条件）をご確認ください。</p>
         <label class="agree"><input type="checkbox"> <span>利用規約・解約条件を確認し、同意します</span></label>
-        <a class="btn btn-join join-btn" href="#join" data-default="プランを選んで入会する"><svg class="card-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg><span class="join-label">プランを選んで入会する</span><svg class="arr" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></a>
+        <div class="ptable" id="ptable" hidden>
+          <stripe-pricing-table pricing-table-id="prctbl_1Ue8IHGwyubYBni6eCxgS70q" publishable-key="pk_live_51Ue7L1GwyubYBni6K5S4WQ7lCY2vzzHQYWMjsAMeKY01zsRYf3m771kc8OEaFFp9a7rR1YJS6OwtMHYBJZmVxcCT00tVZuTecy"></stripe-pricing-table>
+        </div>
         <p class="join-msg" aria-live="polite"></p>
         <p class="join-note">※月額会費は毎月自動更新されます。解約はいつでも可能で、次回更新日の前日までにお手続きください。<span data-site-wrap="stripePortal">ご解約・カードの変更は<a data-site-href="stripePortal" href="#" target="_blank" rel="noopener">会員さま専用ページ</a>から。</span></p>
         <p class="join-note">お支払いはクレジットカード（決済サービス Stripe）で安全に処理されます。</p>
