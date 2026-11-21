@@ -310,3 +310,34 @@ p{margin:0}
 @keyframes phoneFloat{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(-6deg) translateY(-8px)}}
 .cero-btns .btn{white-space:nowrap;padding-inline:22px;flex:1 1 auto}
 @media (max-width:599px){.fcard-logo{width:50px}.fcard-head{gap:12px}}
+
+/* ===== 2026-11-21 修正2 ===== */
+/* リジェ・DFSのボタンの高さをそろえる（ボタンをカードの一番下に） */
+.fcard-reje,.fcard-dfs{display:flex;flex-direction:column;gap:14px}
+.fcard-reje .fcard-btns,.fcard-dfs .fcard-btns{margin-top:auto;padding-top:6px}
+.fcard-reje .fcard-price,.fcard-dfs .fcard-price{margin-bottom:8px}
+
+/* ホームページ制作（横長のカード） */
+.webcard{position:relative;margin-top:20px;border-radius:18px;overflow:hidden;display:grid;gap:8px;align-items:center;padding:clamp(28px,4vw,44px);background:radial-gradient(70% 90% at 85% 40%,#d9f3f1 0%,rgba(217,243,241,0) 70%),linear-gradient(135deg,#f7fcfc 0%,#eaf6f6 100%);border:1px solid #cfe7e6;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.webcard:hover{transform:translateY(-6px);box-shadow:0 28px 56px -30px rgba(31,122,120,.5)}
+@media (min-width:900px){.webcard{grid-template-columns:1.05fr .95fr;gap:24px}}
+.webcard-body{display:grid;gap:14px;min-width:0}
+.webcard-en{display:flex;align-items:center;gap:14px;color:#2f7f80;font-family:var(--serif-en);font-style:italic;font-size:18px}
+.webcard-en span{padding-left:14px;border-left:2px solid #5aa9a6}
+.webcard-ico{width:40px;height:40px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+.webcard h3{font-family:var(--serif-ja);font-weight:600;font-size:clamp(30px,4vw,44px);letter-spacing:.08em;line-height:1.3}
+.webcard-lead{font-weight:500;font-size:17px}
+.webcard-price{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:12px}
+.webcard-price li{flex:1 1 200px;max-width:240px;display:grid;gap:0;padding:12px 18px;border-radius:12px;background:#fff;border:1.5px solid #a9d6d3}
+.webcard-price span{font-weight:700;font-size:16px}
+.webcard-price b{font-size:clamp(26px,3vw,32px);color:#2f7f80;letter-spacing:.01em;white-space:nowrap;line-height:1.3}
+.webcard-price small{font-size:16px;color:var(--ink);font-weight:700}
+.webcard-checks{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 0}
+.webcard-checks li{display:flex;align-items:center;gap:8px;font-weight:700;padding-right:18px;margin-right:18px;border-right:1px solid #b9d9d7}
+.webcard-checks li:last-child{border-right:0;margin-right:0}
+.webcard-checks li::before{content:"";width:20px;height:20px;border-radius:50%;flex:none;background:#3f9a97 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 7' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.btn-web{justify-self:start;margin-top:6px;min-width:220px;color:#fff;background:linear-gradient(180deg,#4aa6a2,#256f6d);box-shadow:0 12px 24px -12px rgba(37,111,109,.8)}
+.btn-web::before{background:#1c5553}
+.webcard-pic{width:100%;height:auto;max-width:560px;justify-self:center;transition:transform .8s var(--ease)}
+.webcard:hover .webcard-pic{transform:translateY(-6px) scale(1.02)}
+@media (max-width:899px){.webcard-pic{order:-1;max-width:420px}}
