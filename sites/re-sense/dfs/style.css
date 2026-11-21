@@ -156,3 +156,9 @@ ul{margin:0;padding:0;list-style:none}
 }
 .agree-links{color:var(--muted);text-align:center}
 .agree-links a{color:var(--lime)}
+
+/* ヘッダーの「今すぐ参加」 */
+.hd-join{gap:8px;white-space:nowrap;padding:0 22px;min-height:48px}
+@media (min-width:768px){.hd-join{font-size:18px}}
+.brand span{white-space:nowrap}
+@media (max-width:420px){.brand span{font-size:19px}.d-mark{width:30px;height:30px}.hd-join{padding:0 16px;font-size:16px}.hd-join .arr{display:none}}

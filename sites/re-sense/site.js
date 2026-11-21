@@ -32,9 +32,9 @@ const SITE = {
 
   // ---- cero（通信アプリ） ----
   cero: {
-    appStore: "",     // App Store のURL（空なら「準備中」）
+    appStore: "https://apps.apple.com/jp/app/cero/id6799101212", // App Store のURL（空なら「準備中」）
     googlePlay: "https://play.google.com/store/apps/details?id=jp.co.gc.cero", // Google Play のURL（空なら「準備中」）
-    startUrl: "",     // 「今すぐceroをはじめる」の行き先（代理店経由の申し込みページなど）。空ならダウンロード欄へ移動
+    startUrl: "https://cero-llc.com/signup?dealer=A1", // 「今すぐ使う」「今すぐはじめる」「今すぐ申し込む」の行き先（代理店経由の申し込みページ）。空ならダウンロード欄へ
     agentUrl: ""      // 代理店制度の詳細・登録ページのURL。空なら RE.sense の公式LINE（lineUrl）へ
   }
 };

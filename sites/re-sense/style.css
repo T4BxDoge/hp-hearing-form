@@ -258,15 +258,55 @@ p{margin:0}
 .mail-link{display:inline-flex;align-items:center;min-height:44px;color:var(--ink)}
 .ft-legal{width:100%}
 /* cero のカード（2枚の下に横長で） */
-@media (min-width:900px){.fcard-cero{grid-column:1/-1;grid-template-columns:auto 1fr auto;align-items:center;column-gap:32px}.fcard-cero>*{grid-column:2}.fcard-cero .fcard-head{grid-column:1;grid-row:1/5}.fcard-cero .btn{grid-column:3;grid-row:1/5;align-self:center}}
 .fcard-cero{background:linear-gradient(135deg,#0b1230 0%,#162264 60%,#0b1230 100%);color:#fff;border:1px solid #c9a650}
 .fcard-cero::before{background:#4f7cff;opacity:.35}
 .fcard-cero .fcard-en{color:#e8c46a}
-.fcard-cero>p:not(.fcard-sub){color:#d6dbef}
-.fcard-cero .fcard-price li{background:rgba(255,255,255,.06);border:1px solid rgba(232,196,106,.55)}
-.fcard-cero .fcard-price b{color:#ffe9a8}
 .fcard-cero:hover{box-shadow:0 28px 56px -30px rgba(232,196,106,.55)}
-.fcard-cero-logo{flex:none;display:grid;place-items:center;width:64px;height:64px;border-radius:16px;background:#000;border:1px solid #555;font-family:"Quicksand","Helvetica Neue",sans-serif;font-size:22px;color:#fff;position:relative}
-.fcard-cero-logo::before{content:"";position:absolute;left:17px;top:19px;width:5px;height:5px;border-radius:50%;background:#d6ff3a;box-shadow:0 0 6px #d6ff3a}
 .btn-cero{background:linear-gradient(180deg,#fff0b8,#e8c46a 60%,#b88a2e);color:#3a2600;font-weight:700}
 .btn-cero::before{background:#ffe9a8}
+
+/* ===== 2026-11-21 修正：注目サービスのボタン・ceroカード ===== */
+.fcard-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.fcard-btns .btn{margin-top:0;flex:1 1 180px;justify-content:center}
+.fcard .fcard-btns .btn{justify-self:auto}
+.fcard-price b{white-space:nowrap}
+.btn-reje-o{border:2px solid #1846a8;color:#1846a8;background:#fff}
+.btn-reje-o::before{background:#1846a8}
+.btn-reje-o:hover{color:#fff}
+.btn-dfs-o{border:2px solid #9cff2e;color:#fff;background:transparent;font-weight:700}
+.btn-dfs-o::before{background:#9cff2e}
+.btn-dfs-o:hover{color:#06200d}
+
+/* cero：スマホの絵＋説明＋3つのボタン */
+.fcard-cero{grid-column:1/-1;display:grid;grid-template-columns:1fr;gap:20px;background:radial-gradient(80% 120% at 15% 90%,#1d4bd8 0%,rgba(29,75,216,0) 55%),radial-gradient(60% 80% at 30% 120%,#0b2a9a 0%,rgba(11,42,154,0) 60%),linear-gradient(135deg,#050b2a 0%,#0b1440 60%,#050b2a 100%);border:1px solid #1c2a6a;overflow:hidden}
+.fcard-cero>*{grid-column:auto}
+.cero-phone{justify-self:center;width:150px}
+.cero-phone-body{position:relative;aspect-ratio:9/18.5;border-radius:26px;background:linear-gradient(160deg,#0d0f16,#000 60%);border:5px solid #9aa3b4;box-shadow:inset 0 0 0 2px #2b2f3a,0 20px 40px -18px #000,-6px 0 0 -1px #555 ;display:grid;place-items:center;transform:rotate(-6deg);animation:phoneFloat 6s ease-in-out infinite}
+.cero-notch{position:absolute;top:8px;left:50%;width:40%;height:14px;transform:translateX(-50%);border-radius:0 0 10px 10px;background:#000}
+.cero-phone-body img{width:62%;height:auto}
+.cero-body{display:grid;gap:12px;min-width:0}
+.fcard-cero .fcard-en{color:#ffc94a}
+.fcard-cero h3{font-size:clamp(24px,3.2vw,36px);font-weight:900;line-height:1.3;display:flex;flex-wrap:wrap;align-items:flex-end;gap:4px 14px}
+.cero-logo{height:1.5em;width:auto}
+.cero-lead{color:#e3e8ff;font-weight:700;font-size:17px}
+.cero-price{display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;justify-self:start;border:2px solid #ffc94a;border-radius:14px;padding:10px 22px}
+.cero-price span{font-weight:700;color:#fff}
+.cero-price b{color:#ffc94a;font-size:clamp(22px,2.6vw,28px);white-space:nowrap}
+.cero-price b small{font-size:16px}
+@media (min-width:768px){.cero-price span{padding-right:20px;border-right:1px solid rgba(255,255,255,.5)}}
+.cero-btns{grid-column:1/-1}
+.btn-cero{background:linear-gradient(180deg,#ffd75a,#f5a623);color:#3a2600;font-weight:900}
+.btn-cero::before{background:#ffe9a8}
+.btn-cero-go{background:linear-gradient(180deg,#d8ff5a,#9be01c);color:#14200a;font-weight:900}
+.btn-cero-go::before{background:#eaff9a}
+.btn-cero-o{border:2px solid #ffc94a;color:#ffc94a;background:transparent;font-weight:900}
+.btn-cero-o::before{background:#ffc94a}
+.btn-cero-o:hover{color:#3a2600}
+@media (min-width:900px){
+  .fcard-cero{grid-template-columns:220px 1fr;column-gap:40px;padding:40px 48px}
+  .cero-phone{width:190px;grid-row:1/3;align-self:end;margin-bottom:-60px}
+  .cero-btns{grid-column:2}
+}
+@keyframes phoneFloat{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(-6deg) translateY(-8px)}}
+.cero-btns .btn{white-space:nowrap;padding-inline:22px;flex:1 1 auto}
+@media (max-width:599px){.fcard-logo{width:50px}.fcard-head{gap:12px}}
