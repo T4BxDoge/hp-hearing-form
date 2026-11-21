@@ -7,7 +7,7 @@
 ### 株式会社RE.sense — 本番公開済み
 - 本番URL：https://resense-inc.com （www付きも可）
 - ファイル：`sites/re-sense/`（トップ＋サービス紹介2ページ＋規約4ページ、問い合わせはLINEとメール）
-  - トップ `index.html`／リジェコミュニティ `reje/`／DFS Collective `dfs/`／cero `cero/`（通信アプリ・代理店募集）／規約 `legal/`（特商法・利用規約・プライバシー・紹介制度規約）
+  - トップ `index.html`／リジェコミュニティ `reje/`／DFS Collective `dfs/`／cero `cero/`（通信アプリ・代理店募集）／ホームページ制作 `web/`（初期55,000円・月額5,500円）／規約 `legal/`（特商法・利用規約・プライバシー・紹介制度規約）
   - 会社情報・決済リンクは `site.js` の `SITE` にまとめている（全ページ共通）
 - 公開：Cloudflare Workers の `resense` プロジェクト（ルート `/sites/re-sense`）
 - ドメイン：resense-inc.com（Cloudflare Registrar、RE.sense会社名義、自動更新オン）
