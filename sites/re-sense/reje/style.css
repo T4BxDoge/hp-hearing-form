@@ -118,13 +118,14 @@ ul{margin:0;padding:0;list-style:none}
 /* 料金プラン */
 .plan{background:linear-gradient(180deg,#fff,var(--sky) 60%,#fff)}
 .plan-hint{text-align:center;color:var(--muted);margin-bottom:20px}
-.plans{display:grid;gap:16px;max-width:880px;margin:0 auto}
-@media (min-width:768px){.plans{grid-template-columns:1fr 1fr;gap:24px}}
+.plans{display:grid;gap:16px;max-width:560px;margin:0 auto}
+@media (min-width:1024px){.plans{grid-template-columns:repeat(3,1fr);gap:20px;max-width:1040px}}
 .pcard{position:relative;cursor:pointer;background:#fff;border:2px solid var(--line);border-radius:18px;padding:0 24px 24px;overflow:hidden;display:grid;gap:10px;align-content:start;transition:border-color .3s,transform .4s var(--ease),box-shadow .4s var(--ease);-webkit-tap-highlight-color:transparent}
 .pcard:hover{transform:translateY(-4px)}
 .pcard[aria-checked="true"]{border-color:var(--blue);box-shadow:0 18px 40px -20px rgba(21,83,214,.6)}
 .pcard-name{margin:0 -24px;padding:12px 24px;background:var(--sky);color:var(--navy);font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px}
 .pcard-pro .pcard-name{background:linear-gradient(90deg,var(--blue2),var(--blue));color:#fff}
+.pcard-aff .pcard-name{background:#dbe7ff}
 .radio{width:22px;height:22px;border-radius:50%;border:2px solid currentColor;display:inline-grid;place-items:center;flex:none}
 .radio::after{content:"";width:10px;height:10px;border-radius:50%;background:currentColor;transform:scale(0);transition:transform .3s var(--ease)}
 .pcard[aria-checked="true"] .radio::after{transform:scale(1)}
@@ -152,15 +153,15 @@ ul{margin:0;padding:0;list-style:none}
 /* 紹介制度 */
 .mark{background:linear-gradient(transparent 62%,var(--yellow) 62%);padding:0 .2em;font-style:italic}
 .ref-lead{text-align:center;margin-bottom:24px;font-weight:500}
-.refs{display:grid;gap:16px;max-width:880px;margin:0 auto}
-@media (min-width:768px){.refs{grid-template-columns:1fr 1fr;gap:24px}}
+.refs{display:grid;gap:16px;max-width:560px;margin:0 auto}
+@media (min-width:1024px){.refs{grid-template-columns:repeat(3,1fr);gap:20px;max-width:1040px}}
 .ref{border:2px solid var(--line);border-radius:18px;overflow:hidden;text-align:center;display:grid;gap:10px;padding-bottom:20px;background:#fff;transition:transform .4s var(--ease)}
 .ref:hover{transform:translateY(-4px)}
 .ref h3{background:linear-gradient(90deg,var(--blue2),var(--blue));color:#fff;font-size:18px;font-weight:900;padding:12px;display:flex;justify-content:center;align-items:center;gap:8px}
 .ref-pay{justify-self:center;background:#fff4c2;border-radius:999px;padding:4px 22px;font-weight:900;color:var(--navy)}
 .ref-pay b{font-size:30px;font-family:"Montserrat",sans-serif}
 .ref p:last-child{padding-inline:16px;font-weight:500}
-.ref-note{max-width:880px;margin:20px auto 0;border:1px solid var(--navy);border-radius:999px;padding:10px 24px;text-align:center;font-size:16px}
+.ref-note{max-width:880px;margin:20px auto 0;border:1px solid var(--navy);border-radius:16px;padding:12px 24px;text-align:left;font-size:16px}
 .ref-note a{color:var(--blue)}
 @media (max-width:767px){.ref-note{border-radius:16px;text-align:left}}
 
