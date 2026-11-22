@@ -1,6 +1,6 @@
 # 現在の状況（作業のたびに更新する）
 
-最終更新：2026-11-19（RE.sense にリジェコミュニティ・DFS Collective のページを追加）
+最終更新：2026-11-22（リジェを3プランに。紹介リンクの受け取りを追加）
 
 ## 案件ごとの状況
 
@@ -18,6 +18,9 @@
   - [ ] サービスの説明文は制作時の仮の文章のまま（先方の確認待ち）
   - [ ] Googleアナリティクスは未設定（`SITE.gaId` に測定IDを入れれば動く）
   - [x] Stripe 設定済み（2026-11-21）：リジェは Stripe の料金表（`reje/index.html` の `<stripe-pricing-table>`、同意チェックで表示）、DFS は Payment Link（`site.js` の `SITE.stripe.dfs`）。カスタマーポータル（解約・カード変更）のURLは未設定 → `SITE.stripePortal`
+  - [x] リジェを3プランに（2026-11-22）：一般 2,200円／アフィリエイト 3,300円（紹介特典あり）／チャンネル作成 4,400円（すべて）。紹介特典は 500／750／1,000円、受け取れるのはアフィリエイト・チャンネル作成プランの会員。紹介制度規約の第1・2・4条（会費から差し引き、超えた分は月1回振込）と特商法の料金も更新
+  - [x] 紹介リンク（`reje/?ref=コード`）：`lp.js` の `applyReferral` がコードを30日間覚え、Stripe の料金表に `client-reference-id` として渡す。記録と特典の付与は Discord bot（IT2097/discord-bot の `referral.py`）
+  - [ ] **Stripe 側の作業（ユーザー）**：3,300円の「アフィリエイトプラン」の商品を作り、料金表（`prctbl_1Ue8IHGwyubYBni6eCxgS70q`）に追加する。並び順は 2,200 → 3,300 → 4,400
   - [x] cero のリンク：App Store・Google Play・申し込み（`https://cero-llc.com/signup?dealer=A1`）を設定済み。代理店ページのURL（`SITE.cero.agentUrl`）は未設定（空なら公式LINEへ）
   - [x] メール info@resense-inc.com（受信テスト済み。最初は迷惑メールに入ったので、Gmailで「迷惑メールではない」とフィルタを設定）：Cloudflare の Email Routing で会社のGmail（遠藤さん管理）へ転送する設定済み（2026-11-20）。受信のみ。info@ から返信したくなったら Gmail の「他のアドレスからメールを送信」か Google Workspace
   - [ ] 特商法の表記：代表者名・住所・電話は「請求があれば開示」の表記。Stripe の審査で求められたら `SITE.representative`／`address`／`tel` に入れる

@@ -46,6 +46,30 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
   update();
 })();
 
+/* ---------- 紹介リンク（?ref=紹介コード） ----------
+   紹介リンクから来たら紹介コードを30日間覚えておき、Stripe の料金表に client-reference-id として渡す。
+   申し込むと Stripe の決済に紹介コードが付き、Discord bot が紹介として記録する */
+function applyReferral(table) {
+  const KEY = "reje_ref", DAYS = 30, valid = c => /^[A-Za-z0-9]{4,20}$/.test(c || "");
+  let code = new URLSearchParams(location.search).get("ref");
+  try {
+    if (valid(code)) {
+      localStorage.setItem(KEY, JSON.stringify({ code, at: Date.now() }));
+    } else {
+      const saved = JSON.parse(localStorage.getItem(KEY) || "null");
+      code = saved && Date.now() - saved.at < DAYS * 864e5 ? saved.code : "";
+    }
+  } catch (e) { if (!valid(code)) code = ""; }
+  if (!valid(code)) return;
+  const old = table.querySelector("stripe-pricing-table");
+  if (!old) return;
+  // 料金表が表示されたあとでは属性の変更が効かないことがあるため、属性を付けた新しい料金表に差し替える
+  const fresh = document.createElement("stripe-pricing-table");
+  for (const a of old.attributes) fresh.setAttribute(a.name, a.value);
+  fresh.setAttribute("client-reference-id", code.toUpperCase());
+  old.replaceWith(fresh);
+}
+
 /* ---------- 入会ボタン（Stripe の決済ページへ） ----------
    SITE.stripe に Payment Link の URL があればそこへ移動。
    空のときは「準備中」と表示して、LINEでの問い合わせに案内する */
@@ -56,6 +80,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
   // Stripe の料金表を使うページ（リジェ）：同意のチェックで料金表を表示する
   const table = document.getElementById("ptable");
   if (table) {
+    applyReferral(table);
     const ag = box.querySelector(".agree input"), m = box.querySelector(".join-msg");
     const sync = () => {
       table.hidden = !ag.checked;
