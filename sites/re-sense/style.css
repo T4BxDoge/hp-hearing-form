@@ -342,3 +342,10 @@ p{margin:0}
 .webcard:hover .webcard-pic{transform:translateY(-6px) scale(1.02)}
 @media (max-width:899px){.webcard-pic{order:-1;max-width:420px}}
 .webcard-pic{filter:drop-shadow(0 20px 20px rgba(20,70,80,.18))}
+/* DFSカード：特長4つ（余白を埋める） */
+.dfs-feats{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dfs-feats li{display:grid;justify-items:center;text-align:center;gap:2px;padding:14px 8px;border-radius:12px;border:1.5px solid rgba(156,255,46,.55);background:linear-gradient(180deg,rgba(156,255,46,.07),rgba(0,0,0,.2));box-shadow:inset 0 0 14px -8px #5dff3a;transition:transform .4s var(--ease),box-shadow .4s}
+.dfs-feats li:hover{transform:translateY(-3px);box-shadow:inset 0 0 18px -6px #5dff3a,0 0 18px -8px #5dff3a}
+.dfs-feats svg{width:32px;height:32px;fill:none;stroke:#e4ff3a;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px rgba(228,255,58,.5))}
+.dfs-feats b{color:#fff;font-size:16px;line-height:1.4}
+.dfs-feats small{color:#cfe6d3;font-size:16px;line-height:1.4}
