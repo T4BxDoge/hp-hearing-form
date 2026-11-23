@@ -80,10 +80,7 @@ function applyReferral(table) {
   // Stripe の料金表を使うページ（リジェ）：同意のチェックで料金表を表示する
   const table = document.getElementById("ptable");
   if (table) {
-<<<<<<< HEAD
-=======
     applyReferral(table);
->>>>>>> origin/main
     const ag = box.querySelector(".agree input"), m = box.querySelector(".join-msg");
     const sync = () => {
       table.hidden = !ag.checked;
