@@ -255,3 +255,6 @@ ul{margin:0;padding:0;list-style:none}
 .hero-strip{display:block;width:100%;height:auto;position:relative;z-index:1;animation:fadeUp 1.2s var(--ease) both}
 .hero-in{padding-top:0!important;margin-top:clamp(-24px,-2vw,-8px)}
 .hero{background-position:center 60%}
+/* 文字を上に寄せる（人物の間に見出しが入るように） */
+@media (min-width:768px){.hero-in{margin-top:clamp(-150px,-10.5vw,-60px)}}
+@media (max-width:767px){.hero-in{margin-top:-6px}}
