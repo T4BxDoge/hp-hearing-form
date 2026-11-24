@@ -162,3 +162,6 @@ ul{margin:0;padding:0;list-style:none}
 @media (min-width:768px){.hd-join{font-size:18px}}
 .brand span{white-space:nowrap}
 @media (max-width:420px){.brand span{font-size:19px}.d-mark{width:30px;height:30px}.hd-join{padding:0 16px;font-size:16px}.hd-join .arr{display:none}}
+/* 背景透過の犬の画像（全身が入るように） */
+.hero-pic img{width:78%;margin-right:auto;filter:drop-shadow(0 18px 24px rgba(0,0,0,.45))}
+.hero-tag{z-index:2}
