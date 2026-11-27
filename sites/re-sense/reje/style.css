@@ -242,3 +242,10 @@ ul{margin:0;padding:0;list-style:none}
   .hero-badge span{background:var(--yellow);padding:4px 12px;transform:skewX(-8deg)}
   .hero-badge i{color:var(--yellow)}
 }
+/* スマホ：帯を1行に収める（画面の幅に合わせて文字を少し小さく） */
+@media (max-width:599px){
+  .hero-badge{background:var(--yellow);padding:5px 10px;transform:skewX(-8deg);flex-wrap:nowrap;white-space:nowrap;gap:4px;letter-spacing:0;font-size:min(16px,calc((100vw - 84px) / 19))}
+  .hero-badge>*{transform:skewX(8deg)}
+  .hero-badge span{background:none;padding:0}
+  .hero-badge i{color:var(--blue)}
+}
