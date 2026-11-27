@@ -90,3 +90,4 @@ claude.ai のチャット（2026-11-05〜11-19）でのやり取りをまとめ�
 - プラン名を「スタンダード（2,200円）／アフィリエイト（3,300円）／プレミアム（4,400円）」に変更（先方の紹介制度規約の改定版に合わせた）
 - 2026-11-23：トップの <title> は「トップページ｜株式会社RE.sense」（先方の希望）。WebSite の構造化データでサイト名を指定。リジェのヒーロー画像はノートPC全体が入るよう切り直し、縁をぼかした
 - 2026-11-23：リジェ・DFS・ceroの各ページにファビコン（favicon.ico／images/favicon.png／apple-touch-icon.png）を設定。トップのDFSカードに特長4つを追加
+- 2026-11-27：Stripe→discord-bot の Webhook が503で失敗し続けた原因は、Railway の変数名のつづり間違い（STRIPE_WEBHOOK_SERCRET → 正しくは STRIPE_WEBHOOK_SECRET）。直して再送し200を確認
