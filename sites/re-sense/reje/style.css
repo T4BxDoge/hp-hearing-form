@@ -232,3 +232,6 @@ ul{margin:0;padding:0;list-style:none}
 .hero-pic::before{inset:-4%;background:radial-gradient(closest-side,rgba(255,255,255,.28),rgba(127,208,255,.35) 45%,transparent 72%)}
 .hero-pic::after{content:"";position:absolute;width:min(86%,380px);aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.35);box-shadow:0 0 0 18px rgba(255,255,255,.05),0 0 0 40px rgba(255,255,255,.03);z-index:-1;animation:breathe 6s ease-in-out infinite}
 @media (max-width:899px){.hero-pic img.hero-logo{width:min(46%,200px)}}
+/* ロゴは白い丸の中に */
+.hero-pic img.hero-logo{box-sizing:border-box;width:min(70%,300px);aspect-ratio:1;object-fit:contain;padding:12%;background:#fff;border-radius:50%;filter:none;box-shadow:0 22px 44px -16px rgba(0,20,80,.6),0 0 0 8px rgba(255,255,255,.18),0 0 40px rgba(127,208,255,.45)}
+@media (max-width:899px){.hero-pic img.hero-logo{width:min(52%,220px)}}
