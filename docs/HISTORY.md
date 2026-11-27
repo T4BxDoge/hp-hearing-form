@@ -91,3 +91,6 @@ claude.ai のチャット（2026-11-05〜11-19）でのやり取りをまとめ�
 - 2026-11-23：トップの <title> は「トップページ｜株式会社RE.sense」（先方の希望）。WebSite の構造化データでサイト名を指定。リジェのヒーロー画像はノートPC全体が入るよう切り直し、縁をぼかした
 - 2026-11-23：リジェ・DFS・ceroの各ページにファビコン（favicon.ico／images/favicon.png／apple-touch-icon.png）を設定。トップのDFSカードに特長4つを追加
 - 2026-11-27：Stripe→discord-bot の Webhook が503で失敗し続けた原因は、Railway の変数名のつづり間違い（STRIPE_WEBHOOK_SERCRET → 正しくは STRIPE_WEBHOOK_SECRET）。直して再送し200を確認
+
+## 2026-11-27 利用規約：Discordサーバーから退出したら支払い期間の終わりで解約
+- 第3条5項を追加。Discord bot が、退出した会員のStripeの契約を支払い期間の終わりで解約する仕組みに合わせた
