@@ -184,3 +184,4 @@ ul{margin:0;padding:0;list-style:none}
   .price-num b{font-size:min(56px,11vw)}
   .price-num span{font-size:min(30px,6vw)}
 }
+@media (max-width:899px){.hero-pic{margin-top:28px}}
