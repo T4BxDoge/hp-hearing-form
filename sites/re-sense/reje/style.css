@@ -235,3 +235,10 @@ ul{margin:0;padding:0;list-style:none}
 /* ロゴは白い丸の中に */
 .hero-pic img.hero-logo{box-sizing:border-box;width:min(70%,300px);aspect-ratio:1;object-fit:contain;padding:12%;background:#fff;border-radius:50%;filter:none;box-shadow:0 22px 44px -16px rgba(0,20,80,.6),0 0 0 8px rgba(255,255,255,.18),0 0 40px rgba(127,208,255,.45)}
 @media (max-width:899px){.hero-pic img.hero-logo{width:min(52%,220px)}}
+/* スマホ：帯が折り返すと右に黄色の空白ができるので、言葉ごとの黄色い札にする */
+@media (max-width:599px){
+  .hero-badge{background:none;padding:0;transform:none;gap:8px 6px}
+  .hero-badge>*{transform:none}
+  .hero-badge span{background:var(--yellow);padding:4px 12px;transform:skewX(-8deg)}
+  .hero-badge i{color:var(--yellow)}
+}
