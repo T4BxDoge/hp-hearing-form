@@ -6,7 +6,7 @@
 const SITE = {
   name: "株式会社RE.sense",
   url: "https://resense-inc.com/",
-  description: "オンラインコミュニティ（リジェコミュニティ・DFS Collective）の運営、通信アプリ「cero」の開発・提供、ホームページ制作",
+  description: "オンラインコミュニティ（リジェコミュニティ・DFS Collective）の運営、通信アプリ「cero」の取り扱い、ホームページ制作",
   // 営業時間を載せるときは、構造化データ用に曜日・開始・終了を入れる
   // 例：[{ days: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "10:00", closes: "19:00" }]
   openingHours: [],
