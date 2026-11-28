@@ -258,3 +258,13 @@ ul{margin:0;padding:0;list-style:none}
 /* 文字を上に寄せる（人物の間に見出しが入るように） */
 @media (min-width:768px){.hero-in{margin-top:clamp(-150px,-10.5vw,-60px)}}
 @media (max-width:767px){.hero-in{margin-top:-6px}}
+/* 代理店募集の女性：丸く切り抜いて金の縁 */
+.agent-pic{width:clamp(150px,16vw,200px);aspect-ratio:1;height:auto;border-radius:50%;border:3px solid var(--gold);box-shadow:0 0 0 6px rgba(232,196,106,.18),0 10px 30px -10px #000}
+/* メリットの見出し：言葉の途中で改行しない */
+.merits h3{word-break:keep-all;overflow-wrap:normal;font-size:min(17px,4.2vw)}
+.merits{grid-template-columns:repeat(2,minmax(0,1fr))}
+.merits h3{white-space:nowrap;font-size:min(17px,4vw)}
+@media (min-width:768px){.merits{grid-template-columns:repeat(4,minmax(0,1fr))}.merits h3{font-size:17px}}
+@media (min-width:900px){.agent-box .merits{grid-column:1/-1}.btn-agent{grid-column:1/-1;justify-self:center;min-width:min(100%,520px)}}
+@media (max-width:767px){.merits h3{font-size:16px}.merits li{padding-inline:4px}.agent-box{padding-inline:14px}}
+@media (max-width:350px){.merits h3{white-space:normal;word-break:keep-all}}
