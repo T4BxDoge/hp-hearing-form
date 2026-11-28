@@ -266,3 +266,5 @@ ul{margin:0;padding:0;list-style:none}
 .merits h3{white-space:nowrap;font-size:min(17px,4vw)}
 @media (min-width:768px){.merits{grid-template-columns:repeat(4,minmax(0,1fr))}.merits h3{font-size:17px}}
 @media (min-width:900px){.agent-box .merits{grid-column:1/-1}.btn-agent{grid-column:1/-1;justify-self:center;min-width:min(100%,520px)}}
+@media (max-width:767px){.merits h3{font-size:16px}.merits li{padding-inline:4px}.agent-box{padding-inline:14px}}
+@media (max-width:350px){.merits h3{white-space:normal;word-break:keep-all}}
